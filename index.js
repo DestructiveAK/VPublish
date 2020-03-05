@@ -10,6 +10,8 @@ const PORT = 8080;
 //create app
 const app = express();
 
+const path = require('path');
+
 //import multer for parsing multipart/form-data
 const multer = require('multer');
 const upload = multer();
@@ -38,7 +40,7 @@ mongoose.connect(dbConfig.url, {
     process.exit();
 });
 
-//app.use(express.static(path.join(__dirname + '/public')));
+app.use(express.static(path.join(__dirname + '/public')));
 
 //include public routes
 require('./app/routes/routes')(app);
