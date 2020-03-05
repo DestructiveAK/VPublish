@@ -1,0 +1,14 @@
+html {
+  background: linear-gradient(rgba(196, 102, 0, 0.6), rgba(155, 89, 182, 0.6)) no-repeat center center fixed;
+  background-repeat: no-repeat;
+  font-family: Google Sans,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+}
+
+#paper-form {
+  width: 85%;
+  margin: 50px auto;
+  text-align: center;
+  position: relative;
+  max-width: 800px;
+}
+

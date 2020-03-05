@@ -1,0 +1,24 @@
+{
+  "name": "v",
+  "version": "1.0.0",
+  "description": "Web app for paper publishing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Express",
+    "RestAPI",
+    "MongoDB",
+    "Mongoose",
+    "V"
+  ],
+  "author": "Aman Sinha",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.3",
+    "multer": "^1.4.2"
+  }
+}
