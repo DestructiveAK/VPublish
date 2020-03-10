@@ -1,6 +1,6 @@
 const path = require('path');
 const Token = require('../models/token.model');
-const User = require('../models/token.model');
+const User = require('../models/user.model');
 
 
 module.exports = (app) => {
