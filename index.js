@@ -7,8 +7,6 @@ const bodyParser = require('body-parser');
 //define listening port
 const PORT = 8080;
 
-const path = require('path');
-
 //create app
 const app = express();
 
