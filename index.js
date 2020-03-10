@@ -7,6 +7,8 @@ const bodyParser = require('body-parser');
 //define listening port
 const PORT = 8080;
 
+const path = require('path');
+
 //create app
 const app = express();
 
@@ -38,7 +40,7 @@ mongoose.connect(dbConfig.url, {
     process.exit();
 });
 
-//app.use(express.static(path.join(__dirname + '/public')));
+app.use(express.static(path.join(__dirname + '/public')));
 
 //include public routes
 require('./app/routes/routes')(app);
