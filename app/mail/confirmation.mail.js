@@ -47,7 +47,7 @@ module.exports = (user, req, token) => {
     try {
         const sent = sendMail();
         if (sent) {
-            console.log({ message: 'email sent successfully' })
+            console.log({ message: `Email sent successfully to ${user.email}` })
         }
     } catch (error) {
         throw new Error(error.message)
