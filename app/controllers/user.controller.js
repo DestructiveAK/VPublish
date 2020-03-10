@@ -38,6 +38,7 @@ exports.create = (req, res) => {
                     return res.status(500).send({msg: err.message});
                 }
                 require('../mail/confirmation.mail')(user, req, token);
+                res.send({msg: 'User account created successfully.'});
             });
         }
     });
