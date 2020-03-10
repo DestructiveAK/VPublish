@@ -7,8 +7,8 @@ module.exports = (user, req, token) => {
         theme: 'salted',
         product:{
             name: 'VPublish',
-            link: 'http://localhost:8080',
-        },
+            link: 'http:\/\/' + req.headers.host,
+        }
     });
 
     const email = {
@@ -40,7 +40,7 @@ module.exports = (user, req, token) => {
             sgMail.setApiKey(sendgrid.api_key);
             return sgMail.send(msg)
         } catch (error) {
-            throw new Error(error.message)
+            console.log(error)
         }
     };
 
@@ -50,7 +50,7 @@ module.exports = (user, req, token) => {
             console.log({ message: `Email sent successfully to ${user.email}` })
         }
     } catch (error) {
-        throw new Error(error.message)
+        console.log(error)
     }
 
 };
