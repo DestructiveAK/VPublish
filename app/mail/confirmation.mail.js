@@ -14,15 +14,16 @@ module.exports = (user, req, token) => {
     const email = {
         body: {
             name: user.firstname,
-            intro: 'Welcome to email verification',
+            intro: 'Welcome to VPublish! We\'re very excited to have you on board.',
             action: {
-                instructions: 'Please click the button below to verify your account',
+                instructions: 'To get started with VPublish, please click here:',
                 button: {
-                    color: '#33b5e5',
-                    text: 'Verify account',
+                    color: '#22BC66',
+                    text: 'Confirm your account',
                     link: 'http:\/\/' + req.headers.host + '\/confirmation\/' + token.token,
-                },
+                }
             },
+            outro: 'This link will expire in 12 hours.'
         },
     };
 
@@ -47,7 +48,7 @@ module.exports = (user, req, token) => {
     try {
         const sent = sendMail();
         if (sent) {
-            console.log({ message: `Email sent successfully to ${user.email}` })
+            console.log(`Email sent successfully to ${user.email}` )
         }
     } catch (error) {
         console.log(error)
