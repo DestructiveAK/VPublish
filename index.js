@@ -28,11 +28,14 @@ app.use(upload.array());
 //configure database
 const dbConfig = require('./config/database.config.js');
 const mongoose = require('mongoose');
+
 mongoose.Promise = global.Promise;
 
 //Connecting to database
 mongoose.connect(dbConfig.url, {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
 }).then(() => {
     console.log("Successfully connected to the database");
 }).catch(err => {
