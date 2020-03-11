@@ -7,6 +7,6 @@ module.exports = (app) => {
     app.post('/signup', users.create);
 
     //Retrieve a user account
-    app.post('/login', users.findOne);
+    app.post('/login', users.login);
 
 };
