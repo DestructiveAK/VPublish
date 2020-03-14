@@ -1,4 +1,3 @@
-const path = require('path');
 const Token = require('../models/token.model');
 const User = require('../models/user.model');
 
