@@ -1,0 +1,82 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width,initial-scale=1,shrink-to-fit=no')
+    title v-con
+    link(rel='stylesheet' href='assets/bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet' href='assets/fonts/ionicons.min.css')
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css')
+    link(rel='stylesheet' href='assets/css/Login-Form-Clean.css')
+    link(rel='stylesheet' href='assets/css/Navigation-Clean.css')
+    link(rel='stylesheet' href='assets/css/Navigation-with-Button.css')
+    link(rel='stylesheet' href='assets/css/Registration-Form-with-Photo-1.css')
+    link(rel='stylesheet' href='assets/css/Registration-Form-with-Photo.css')
+    link(rel='stylesheet' href='assets/css/styles.css')
+  body
+    #top-fix
+    form#paper-form
+      ul.list-unstyled#progressbar
+        li.active Enter Paper Details
+        li Corresponding Authors Details
+        li Upload Attachments
+      fieldset
+        h2.text-center.fs-title
+          strong Enter Paper Details
+        .form-group
+          h5.text-left.info Title:
+          input.form-control#title(type='text' required)
+        .form-group
+          h5.text-left.info Abstract:
+          textarea.form-control.form-control-lg#abstract(spellcheck='true' maxlength='500' required rows='6')
+        .form-group
+          h5.text-left.info Keywords:
+          textarea.form-control#keywords(required maxlength='100')
+        button.btn.btn-primary.next.action-button(type='button') Next
+      fieldset
+        h4.text-left.fs-title
+          strong Corresponding Authors Details
+        .form-group
+          input.form-control.author#author-first-name(type='text' required)
+          label First Name
+        .form-group
+          input.form-control.author#author-last-name(type='text' required)
+          label Last Name
+        .form-group
+          input.form-control.author#author-email(type='text' required)
+          label Email
+        .form-group
+          button.btn.btn-primary.btn-sm#add-author(type='button') Add authors
+        button.btn.btn-primary.previous.action-button(type='button' name='previous') Previous
+        button.btn.btn-primary.next.action-button(type='button' name='previous') Next
+      fieldset
+        h2.fs-title Upload attachments
+        .table-responsive
+          table.table
+            thead
+              tr
+                th S. No.
+                th Attachments
+                th Select File
+            tbody
+              tr
+                td 1.
+                td Cover Letter
+                td
+                  input(type='file')
+              tr
+                td 2.
+                td Manuscript
+                td
+                  input(type='file' required)
+              tr
+                td 3.
+                td Supplementary Material
+                td
+                  input(type='file')
+        button.btn.btn-primary.previous.action-button(type='button' name='previous') Previous
+        button.btn.btn-primary.submit.action-button#submit-button(type='submit' name='submit') Submit
+    script(src='assets/js/jquery.min.js')
+    script(src='assets/bootstrap/js/bootstrap.min.js')
+    script(src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js' crossorigin='anonymous')
+    script(src='assets/js/new-submission.js')
