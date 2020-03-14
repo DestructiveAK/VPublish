@@ -19,6 +19,11 @@ html
         h2.sr-only Login Form
         .illustration
           i.icon.ion-ios-navigate
+        if error
+          .alert.alert-warning.alert-dismissible.fade.show(role='alert' style="margin-bottom:40px;")
+            strong=error
+            button.close(type='button' data-dismiss='alert' aria-label='Close')
+              span(aria-hidden='true') &times;
         .form-group
           input.form-control(type='email' name='email' required)
           label Email

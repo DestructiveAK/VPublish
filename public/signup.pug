@@ -21,7 +21,12 @@ html
           h2.text-center
             strong Create
             |  an account.
-          .alert
+          if error
+            .alert.alert-warning.alert-dismissible.fade.show(role='alert' style="margin-bottom:40px;")
+              strong=error
+              button.close(type='button' data-dismiss='alert' aria-label='Close')
+                span(aria-hidden='true') &times;
+
           .form-group
             input.form-control(type='text' name='firstname' required)
             label First Name
