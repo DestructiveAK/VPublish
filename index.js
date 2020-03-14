@@ -25,6 +25,8 @@ app.use(bodyParser.json());
 //parse requests of content-type - mutipart/form-data
 app.use(upload.array());
 
+app.set('view engine', 'pug');
+
 //configure database
 const dbConfig = require('./config/database.config.js');
 const mongoose = require('mongoose');
