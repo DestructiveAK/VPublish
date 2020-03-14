@@ -53,6 +53,11 @@ require('./app/routes/routes')(app);
 //include user routes
 require('./app/routes/user.routes')(app);
 
+// route for handling 404 requests(unavailable routes)
+app.use(function (req, res) {
+    res.render(path.resolve('public/not-found'))
+});
+
 //Listen for call on port PORT
 app.listen(PORT, () => {
     console.log("Server is running on port ", PORT);
