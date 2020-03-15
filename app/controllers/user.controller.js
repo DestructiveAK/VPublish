@@ -47,7 +47,7 @@ exports.create = (req, res) => {
 };
 
 
-exports.findOne = (req, res) => {
+exports.login = (req, res) => {
     if (!req.body) {
         res.status(400).send({
             message: "No data received"
