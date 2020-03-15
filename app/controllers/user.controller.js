@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 
 //Create and save a new paper
-exports.create = (req, res) => {
+exports.signup = (req, res) => {
     if (!req.body) {
         return res.status(400).send({
             message: "No data received"
