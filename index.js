@@ -1,8 +1,13 @@
 //importing express for building express app
 const express = require('express');
 
-//import body-parser for parsing content-type - application/json and application/x-www.form-urlencoded
-const bodyParser = require('body-parser');
+//import express session for user authentication
+const session = require('express-session');
+
+//import cookie parser for parsing cookie
+const cookieParser = require('cookie-parser');
+
+const { secret } = require('./config/secret.config');
 
 //define listening port
 const PORT = 8080;
@@ -17,13 +22,19 @@ const multer = require('multer');
 const upload = multer();
 
 //parse requests of content-type - application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.urlencoded({extended: true}));
 
 //parse requests of content-type - application/json
-app.use(bodyParser.json());
+app.use(express.json());
 
 //parse requests of content-type - mutipart/form-data
 app.use(upload.array());
+
+app.use(cookieParser());
+
+app.use(session({
+    secret: secret
+}));
 
 app.set('view engine', 'pug');
 
