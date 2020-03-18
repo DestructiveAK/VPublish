@@ -5,16 +5,15 @@ const crypto = require('crypto');
 
 //Create and save a new paper
 exports.signup = (req, res) => {
-    if (!req.body) {
-        return res.status(400).send({
-            message: "No data received"
-        });
-    }
     const firstName = req.body.firstname;
     const lastName = req.body.lastname;
     const email = req.body.email;
     const password = req.body.password;
     const passwordRepeat = req.body.passwordrepeat;
+
+    if (!firstName || !email || !password || !passwordRepeat) return res.status(400).send({
+        msg: 'Form incomplete'
+    });
     User.findOne({email: email}, function (err, user) {
         if (user) return res.render('../public/signup',
             {error: 'Email is already associated with another account.'});
