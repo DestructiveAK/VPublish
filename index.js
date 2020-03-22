@@ -1,11 +1,26 @@
 //importing express for building express app
 const express = require('express');
 
-//import body-parser for parsing content-type - application/json and application/x-www.form-urlencoded
-const bodyParser = require('body-parser');
+//import express session for user authentication
+const session = require('express-session');
+
+//import cookie parser for parsing cookie
+const cookieParser = require('cookie-parser');
+
+//import morgan to log info about requests
+const morgan = require('morgan');
+
+const secret = require('./config/secret.config');
 
 //define listening port
 const PORT = 8080;
+
+//configure database
+const dbConfig = require('./config/database.config.js');
+const mongoose = require('mongoose');
+
+const MongoStore = require('connect-mongo')(session);
+
 
 //create app
 const app = express();
@@ -16,25 +31,13 @@ const path = require('path');
 const multer = require('multer');
 const upload = multer();
 
-//parse requests of content-type - application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({extended: true}));
 
-//parse requests of content-type - application/json
-app.use(bodyParser.json());
-
-//parse requests of content-type - mutipart/form-data
-app.use(upload.array());
-
-app.set('view engine', 'pug');
-
-//configure database
-const dbConfig = require('./config/database.config.js');
-const mongoose = require('mongoose');
+app.use(morgan('dev'));
 
 mongoose.Promise = global.Promise;
 
 //Connecting to database
-mongoose.connect(dbConfig.url, {
+mongoose.connect(dbConfig.URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
@@ -45,6 +48,44 @@ mongoose.connect(dbConfig.url, {
     process.exit();
 });
 
+
+
+//parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({extended: true}));
+
+//parse requests of content-type - application/json
+app.use(express.json());
+
+//parse requests of content-type - mutipart/form-data
+app.use(upload.array());
+
+app.use(cookieParser());
+
+app.use(session({
+    store: new MongoStore({
+        url: dbConfig.URL
+    }),
+    secret: secret.SECRET,
+    key: secret.KEY,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        expires: 86400000
+    }
+}));
+
+app.use((req, res, next) => {
+   if (req.cookies.user_logged && !req.session.user) {
+       res.clearCookie(key);
+   } else {
+       next();
+   }
+});
+
+app.set('view engine', 'pug');
+
+
+//defining static contents html, css, js, etc.
 app.use(express.static(path.join(__dirname + '/public')));
 
 //include public routes
