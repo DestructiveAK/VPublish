@@ -9,4 +9,7 @@ module.exports = (app) => {
     //Retrieve a user account
     app.post('/login', users.login);
 
+    //Logout
+    app.get('/logout', users.logout);
+
 };
