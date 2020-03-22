@@ -38,7 +38,7 @@ module.exports = (user, req, token) => {
 
     const sendMail = async () => {
         try {
-            sgMail.setApiKey(sendgrid.api_key);
+            sgMail.setApiKey(sendgrid.API_KEY);
             return sgMail.send(msg)
         } catch (error) {
             console.log(error)

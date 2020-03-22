@@ -1,6 +1,6 @@
 const Token = require('../models/token.model');
 const User = require('../models/user.model');
-
+const { checkUser } = require('../middlewares/auth');
 
 module.exports = (app) => {
 
@@ -11,24 +11,31 @@ module.exports = (app) => {
 
     //getting login page
     app.get('/login', function (req, res) {
+        if (req.session.user && req.cookies.user_logged) {
+            return res.redirect('/dashboard');
+        }
         res.render('../public/login');
     });
 
     //getting user sign up page
     app.get('/signup', function (req, res) {
+        if (req.session.user && req.cookies.user_logged) {
+            return res.redirect('/dashboard');
+        }
         res.render('../public/signup');
     });
 
     //getting dashboard page for each user
-    app.get('/dashboard', function (req, res) {
-        res.render('../public/dashboard');
+    app.get('/dashboard', checkUser, function (req, res) {
+        res.render('../public/dashboard', {user: req.session.user});
     });
 
     //getting new_submission page for submitting new paper
-    app.get('/create', function (req, res) {
+    app.get('/create', checkUser, function (req, res) {
         res.render('../public/create');
     });
 
+    //route for token verification for account confirmation
     app.get('/confirmation/:token', function (req, res) {
         if (!req.params) return res.status(400).send({msg: 'No data received.'});
 
@@ -38,7 +45,7 @@ module.exports = (app) => {
                 msg: 'We were unable to find a valid token. Your token may have expired.'
             });
 
-            // If we found a token, find a matching user
+            // If found a token, find a matching user
             User.findOne({_id: token._userId})
                 .then(user => {
                     if (!user) return res.status(400).send({ msg: 'We were unable to find a user for this token.' });
