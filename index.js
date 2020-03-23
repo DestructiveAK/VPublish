@@ -76,7 +76,8 @@ app.use(session({
 
 app.use((req, res, next) => {
    if (req.cookies.user_logged && !req.session.user) {
-       res.clearCookie(key);
+       res.clearCookie('user_logged');
+       next();
    } else {
        next();
    }
