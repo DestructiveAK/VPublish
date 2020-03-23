@@ -70,8 +70,10 @@ exports.login = (req, res) => {
 
 exports.logout = (req, res) => {
     if (req.session.user && req.cookies.user_logged) {
-        res.clearCookie('user_logged');
-        res.redirect('/');
+        req.session.destroy(() => {
+            res.clearCookie('user_logged');
+            res.redirect('/');
+        });
     } else {
         res.redirect('/login');
     }
