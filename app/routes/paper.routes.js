@@ -16,4 +16,4 @@ module.exports = (app) => {
     //Delete a paper
     app.delete('/papers:id', papers.delete);
 
-}
+};
