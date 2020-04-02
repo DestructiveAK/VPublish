@@ -32,7 +32,7 @@ module.exports = (app) => {
 
     //getting new_submission page for submitting new paper
     app.get('/create', checkUser, function (req, res) {
-        res.render('../public/create');
+        res.render('../public/new_submission');
     });
 
     //route for token verification for account confirmation
@@ -40,27 +40,42 @@ module.exports = (app) => {
         if (!req.params) return res.status(400).send({msg: 'No data received.'});
 
         // Find a matching token
-        Token.findOne({ token: req.params.token }, function (err, token) {
-            if (!token) return res.status(400).send({ type: 'not-verified',
-                msg: 'We were unable to find a valid token. Your token may have expired.'
+        Token.findOne({token: req.params.token}, function (err, token) {
+            if (!token) return res.render('../public/success', {
+                msg: 'Unable to verify',
+                info: 'Link expired',
+                page: 'home',
+                stat: 'failed'
             });
-
             // If found a token, find a matching user
             User.findOne({_id: token._userId})
                 .then(user => {
-                    if (!user) return res.status(400).send({ msg: 'We were unable to find a user for this token.' });
-                    if (user.isVerified) return res.status(400).send({ type: 'already-verified',
-                        msg: 'This user has already been verified.'
+                    if (!user) return res.render('../public/success',{
+                        msg: 'Unable to verify',
+                        info: 'Account does not exist',
+                        page: 'home',
+                        stat: 'failed'
+                    });
+                    if (user.isVerified) return res.render('../public/success',{
+                        msg: 'Account already verified.',
+                        info: 'This account is already verified',
+                        page: 'login',
+                        stat: 'success'
                     });
 
                     // Verify and save the user
                     user.isVerified = true;
                     user.save();
-                    return res.status(200).send('The account has been verified. Please log in.')
+                    return res.render('../public/success', {
+                        msg: 'Account verified',
+                        page: 'login',
+                        stat: 'success',
+                        info: 'Account has been successfully verified'
+                    });
                 })
                 .catch(err => {
-                    res.status(500).send({msg: err.message})
+                    console.log(err);
                 });
         });
-    })
+    });
 };

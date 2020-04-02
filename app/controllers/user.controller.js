@@ -40,7 +40,12 @@ exports.signup = (req, res) => {
                 return res.status(500).send({msg: err.message});
             }
             require('../mail/confirmation.mail')(newUser, req, token);
-            res.send({msg: 'User account created successfully.'});
+            res.render('../public/success',{
+                msg:'Account created successfully',
+                page:'home',
+                stat: 'success',
+                info: 'A verification email has been sent to your email.\nPlease check your email and verify your account'
+            })
         });
     });
 };
