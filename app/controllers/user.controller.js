@@ -62,7 +62,7 @@ exports.login = (req, res) => {
     }
 
     User.findOne({email: email}, function (err, user) {
-        if (!user) return res.render('../public/login', {error: 'User not found.'});
+        if (!user) return res.render('../public/login', {error: 'Invalid Email or Password.'});
         if (!bcrypt.compareSync(password, user.password))
             return res.render('../public/login',{error: 'Invalid Email or Password.'});
         if (!user.isVerified)
