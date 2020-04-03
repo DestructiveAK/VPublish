@@ -3,38 +3,26 @@ html
   head
     meta(charset='utf-8')
     meta(name='viewport' content='width=device-width,initial-scale=1,shrink-to-fit=no')
-    title v-con
+    title Login
     link(rel='stylesheet' href='assets/bootstrap/css/bootstrap.min.css')
     link(rel='stylesheet' href='assets/fonts/ionicons.min.css')
-    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css')
-    link(rel='stylesheet' href='assets/css/Login-Form-Clean.css')
-    link(rel='stylesheet' href='assets/css/Navigation-Clean.css')
-    link(rel='stylesheet' href='assets/css/Navigation-with-Button.css')
-    link(rel='stylesheet' href='assets/css/Registration-Form-with-Photo-1.css')
-    link(rel='stylesheet' href='assets/css/Registration-Form-with-Photo.css')
-    link(rel='stylesheet' href='assets/css/styles.css')
+    link(rel='stylesheet' href='assets/css/login.css')
   body
-    .login-clean
+    .login-dark
       form(method='post' action='/login')
-        h2.sr-only Login Form
+        h2.sr-only Log in
         .illustration
-          i.icon.ion-ios-navigate
+          i.icon.ion-ios-locked-outline
         if error
-          .alert.alert-warning.alert-dismissible.fade.show(role='alert' style="margin-bottom:40px;")
+          .alert.alert-warning(role='alert')
             strong=error
-            button.close(type='button' data-dismiss='alert' aria-label='Close')
-              span(aria-hidden='true') &times;
         .form-group
-          input.form-control(type='email' name='email' required)
-          label Email
+          input.form-control(type='email' name='email' placeholder='Email' required)
         .form-group
-          input.form-control(type='password' name='password' required)
-          label Password
+          input.form-control(type='password' name='password' placeholder='Password' required)
         .form-group
-          button#login.btn.btn-primary.btn-block(type='submit') Log In
-        a.forgot(href='#') Forgot your password?
-        a.forgot(href='/signup') Doesn't have an account?
+          button.btn.btn-primary.btn-block(type='submit') Log In
+        a.forgot(href='/forgot') Forgot your password?
+        a.forgot(href='/signup') Don't have an account?
     script(src='assets/js/jquery.min.js')
     script(src='assets/bootstrap/js/bootstrap.min.js')
-    script(src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js' crossorigin='anonymous')
-    script(src='assets/js/new-submission.js')
