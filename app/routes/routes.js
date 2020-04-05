@@ -27,11 +27,13 @@ module.exports = (app) => {
 
     //getting dashboard page for each user
     app.get('/dashboard', checkUser, function (req, res) {
+        res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
         res.render('../public/dashboard', {user: req.session.user});
     });
 
     //getting new_submission page for submitting new paper
     app.get('/create', checkUser, function (req, res) {
+        res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
         res.render('../public/new_submission');
     });
 
