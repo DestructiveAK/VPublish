@@ -84,10 +84,17 @@ app.use((req, res, next) => {
 });
 
 app.set('view engine', 'pug');
+app.set('views', __dirname + '/public/views')
 
-
-//defining static contents html, css, js, etc.
+//defining static contents pug, css, js, etc.
 app.use(express.static(path.join(__dirname + '/public')));
+
+app.use(function (req, res, next) {
+    if (req.session.user && req.cookies.user_logged) {
+        res.locals.user = req.session.user;
+    }
+    next();
+})
 
 //include public routes
 require('./app/routes/routes')(app);
@@ -97,7 +104,7 @@ require('./app/routes/user.routes')(app);
 
 // route for handling 404 requests(unavailable routes)
 app.use(function (req, res) {
-    res.render(path.resolve('public/not-found'))
+    res.render('not-found')
 });
 
 //Listen for call on port PORT

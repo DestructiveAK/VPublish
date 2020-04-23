@@ -40,7 +40,7 @@ exports.signup = (req, res) => {
                 return res.status(500).send({msg: err.message});
             }
             require('../mail/confirmation.mail')(newUser, req, token);
-            res.render('../public/success',{
+            res.render('success',{
                 msg:'Account created successfully',
                 page:'home',
                 stat: 'success',
@@ -55,7 +55,7 @@ exports.login = (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
 
-    if (!email && !password) {
+    if (!email || !password) {
         return res.status(400).send({
             msg: 'No data received'
         });
@@ -67,7 +67,11 @@ exports.login = (req, res) => {
             return res.render('../public/login',{error: 'Invalid Email or Password.'});
         if (!user.isVerified)
             return res.render('../public/login', {error: 'User not verified.'});
-        req.session.user = user;
+        req.session.user = {
+            firstname: user.firstname,
+            lastname: user.lastname,
+            email: user.email
+        };
         res.redirect('/dashboard');
     });
 };
