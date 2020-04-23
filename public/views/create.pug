@@ -1,0 +1,74 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width,initial-scale=1,shrink-to-fit=no')
+    title create
+    link(rel='stylesheet' href='assets/bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet' href='assets/css/create.css')
+  body
+    .create
+      .form
+        form.new-submission(action='/create' method='post' enctype='multipart/form-data')
+          fieldset(style='display:block')
+            h1.text-uppercase.text-center.fs-title Paper Details
+            .form-group
+              label Title
+              textarea.form-control(rows='2')
+            .form-group
+              label Abstract
+              textarea.form-control(name='abstract' maxlength='500' rows='6')
+            .form-group
+              label Keywords
+              textarea.form-control(name='keywords' rows='3')
+            .d-flex.justify-content-center
+              button.btn.btn-primary.btn-next(type='button') Next
+          fieldset
+            h1.text-uppercase.text-center.fs-title Curresponding Authors
+            .form-group
+              label First Name
+              input.form-control(type='text' value=locals.user.firstname readonly)
+            .form-group
+              label Last Name
+              input.form-control(type='text' value=locals.user.lastname readonly)
+            .form-group
+              label Email
+              input.form-control(type='email' value=locals.user.email readonly)
+            .d-flex.justify-content-around
+              button.btn.btn-primary.btn-prev(type='button') Previous
+              button.btn.btn-primary.btn-next(type='button') Next
+          fieldset
+            h1.text-uppercase.text-center.fs-title Upload Attachments
+            .table-responsive
+              table.table
+                thead
+                  tr
+                    th Sl. No
+                    th Attachments
+                    th Select Files
+                tbody
+                  tr
+                    td 1.
+                    td Cover Letter
+                    td
+                      input(type='file' name='cover-letter')
+                  tr
+                    td 2.
+                    td Manuscript
+                    td
+                      input(type='file' name='manuscript')
+                  tr
+                    td 3.
+                    td Supplementary Materials
+                    td
+                      input(type='file' name='supplement')
+            .d-flex.justify-content-around
+              button.btn.btn-primary.btn-prev(type='button') Previous
+              button.btn.btn-primary(type='submit') Submit
+        .steps
+          span.step
+          span.step
+          span.step
+    script(src='assets/js/jquery.min.js')
+    script(src='assets/bootstrap/js/bootstrap.min.js')
+    script(src='assets/js/create.js')
