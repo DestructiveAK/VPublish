@@ -4,17 +4,21 @@ html
     meta(charset='utf-8')
     meta(name='viewport' content='width=device-width,initial-scale=1,shrink-to-fit=no')
     title create
-    link(rel='stylesheet' href='assets/bootstrap/css/bootstrap.min.css')
-    link(rel='stylesheet' href='assets/css/create.css')
+    link(rel='stylesheet' href='/assets/bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet' href='/assets/css/create.css')
   body
     .create
       .form
         form.new-submission(action='/create' method='post' enctype='multipart/form-data')
           fieldset(style='display:block')
             h1.text-uppercase.text-center.fs-title Paper Details
+            if error
+              .alert.alert-warning(role='alert')
+                strong=error
+
             .form-group
               label Title
-              textarea.form-control(rows='2')
+              textarea.form-control(name='title' rows='2')
             .form-group
               label Abstract
               textarea.form-control(name='abstract' maxlength='500' rows='6')
@@ -33,7 +37,7 @@ html
               input.form-control(type='text' value=locals.user.lastname readonly)
             .form-group
               label Email
-              input.form-control(type='email' value=locals.user.email readonly)
+              input.form-control(type='email' value=locals.user.email readonly name='email')
             .d-flex.justify-content-around
               button.btn.btn-primary.btn-prev(type='button') Previous
               button.btn.btn-primary.btn-next(type='button') Next
@@ -69,6 +73,22 @@ html
           span.step
           span.step
           span.step
-    script(src='assets/js/jquery.min.js')
-    script(src='assets/bootstrap/js/bootstrap.min.js')
-    script(src='assets/js/create.js')
+    script(src='/assets/js/jquery.min.js')
+    script(src='/assets/bootstrap/js/bootstrap.min.js')
+    script(src='/assets/js/create.js')
+    script(src='https://cdn.jsdelivr.net/npm/sweetalert2@9')
+    script(src='sweetalert2.all.min.js')
+    script.
+      $(function () {
+          $('.btn[type="submit"]').on('click', function () {
+            Swal.fire({
+              title: 'Uploading Files',
+              text: 'Please wait...',
+              imageUrl: '/assets/img/loading.svg',
+              imageWidth: 200,
+              imageHeight: 200,
+              imageAlt: 'Loading',
+              showConfirmButton: false
+            });
+          });
+      });
