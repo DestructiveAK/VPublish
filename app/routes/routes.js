@@ -45,8 +45,7 @@ module.exports = (app) => {
         Token.findOne({token: req.params.token}, function (err, token) {
             if (!token) return res.render('success', {
                 msg: 'Unable to verify',
-                info: 'Link does not exist or may be expired. ' +
-                    '<br/><strong>To generate new link, login<strong/>',
+                info: 'Link does not exist or may be expired.\n To generate new link, login.',
                 page: 'home',
                 stat: 'failed'
             });
