@@ -36,23 +36,14 @@ module.exports = (user, req, token) => {
         html: emailTemplate,
     };
 
-    const sendMail = async () => {
-        try {
-            sgMail.setApiKey(sendgrid.API_KEY);
-            return sgMail.send(msg)
-        } catch (error) {
-            console.log(error)
-        }
-    };
-
-    try {
-        const sent = sendMail();
-        if (sent) {
-            console.log(`Email sent successfully to ${user.email}` )
-        }
-    } catch (error) {
-        console.log(error)
-    }
-
+    sgMail.setApiKey(sendgrid.API_KEY);
+    sgMail.send(msg)
+        .then(() => {console.log(`Email sent to ${user.email}`)})
+        .catch(error => {
+            console.error(error);
+            if (error.response) {
+                console.error(error.message);
+            }
+        })
 };
 
