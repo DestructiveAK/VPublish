@@ -13,11 +13,32 @@ const PaperSchema = mongoose.Schema({
         type: String,
         required: true
     },
-/*    userID : {
-        type: mongoose.Schema.Types.ObjectID,
-        required: true,
-        ref: 'User'
-    }*/
+    authorId: {
+        type: String,
+        required: true
+    },
+    /*co_author: {
+        type: [{
+            name: String,
+            email: String
+        }],
+        required: false
+    },*/
+    cover_letter: {
+        type: Object,
+        required: false
+    },
+    manuscript: {
+        type: Object,
+        required: true
+    },
+    supplement: {
+        type: Object,
+        required: false
+    }
+    },
+    {
+        timestamps: true
 });
 
 module.exports = mongoose.model('Paper', PaperSchema);
