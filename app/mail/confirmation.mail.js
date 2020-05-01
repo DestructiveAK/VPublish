@@ -20,7 +20,7 @@ module.exports = (user, req, token) => {
                 button: {
                     color: '#22BC66',
                     text: 'Confirm your account',
-                    link: 'http:\/\/' + req.headers.host + '\/confirmation\/' + token.token,
+                    link: 'http:\/\/' + req.headers.host + '\/confirmation\/' + token,
                 }
             },
             outro: 'This link will expire in 12 hours.'
