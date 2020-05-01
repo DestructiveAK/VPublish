@@ -14,9 +14,6 @@ const path = require('path');
 const PORT = 8080;
 
 
-const eventLoopStats = require('event-loop-stats');
-console.log('Stats', eventLoopStats.sense());
-
 mongoose.Promise = global.Promise;
 mongoose.connect(dbConfig.URL, {
     useNewUrlParser: true,
