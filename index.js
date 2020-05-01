@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 const app = express();
 const path = require('path');
+const cron = require('node-cron');
 
 
 //define listening port
@@ -24,6 +25,26 @@ mongoose.connect(dbConfig.URL, {
 }).catch(err => {
     console.log("Could not connect to the database: ", err);
     process.exit();
+});
+
+
+cron.schedule('0 0 0 * * *', () => {
+    console.log('\n\n********** Cron job started **********\n\n Deleting unverified user accounts...\n')
+    const User = require('./app/models/user.model');
+    const date = new Date();
+    date.setDate(date.getDate() - 7);
+    User.deleteMany({
+        isVerified: false,
+        createdAt: {$lte: date}
+    })
+        .then(() => {
+            console.log('All unverified user accounts older than 1 week has been deleted.')
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+},{
+    scheduled: true
 });
 
 
