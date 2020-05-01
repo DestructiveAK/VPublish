@@ -29,7 +29,7 @@ mongoose.connect(dbConfig.URL, {
 
 
 cron.schedule('0 0 0 * * *', () => {
-    console.log('\n\n********** Cron job started **********\n\n Deleting unverified user accounts...\n')
+    console.log('\n\n********** Cron job started **********\n\nDeleting unverified user accounts...\n')
     const User = require('./app/models/user.model');
     const date = new Date();
     date.setDate(date.getDate() - 7);
