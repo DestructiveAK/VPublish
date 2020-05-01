@@ -1,0 +1,59 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width,initial-scale=1,shrink-to-fit=no')
+    title Login
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css')
+    link(rel='stylesheet' href='/assets/fonts/ionicons.min.css')
+    link(rel='stylesheet' href='/assets/css/login.css')
+  body
+    .login-dark
+      form(method='post' action='/login')
+        h2.sr-only Log in
+        .illustration
+          i.icon.ion-ios-locked-outline
+        if error
+          .alert.alert-warning(role='alert')
+            strong=error
+        .form-group
+          input.form-control(type='email' name='email' placeholder='Email' required)
+        .form-group
+          input.form-control(type='password' name='password' placeholder='Password' required)
+        .form-group
+          button.btn.btn-primary.btn-block(type='submit') Log In
+        a.forgot(id='forgot' style='cursor: pointer') Forgot your password?
+        a.forgot(href='/signup') Don't have an account?
+    script(src='/assets/js/jquery.min.js')
+    script(src='/assets/bootstrap/js/bootstrap.min.js')
+    script(src='https://cdn.jsdelivr.net/npm/sweetalert2@9')
+    script.
+      $(function () {
+        $('#forgot').on('click', function () {
+          Swal.fire({
+            title: 'Enter your email:',
+            input: 'email',
+            inputAttributes: {
+              autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Submit',
+            cancelButtonText: 'Cancel',
+            buttonsStyling: true
+          }).then((result) => {
+            if (result.value) {
+              $.ajax({
+                type: 'post',
+                url: '/forgot',
+                data: {'email': result.value},
+                cache: false,
+              });
+              Swal.fire({
+                icon: 'success',
+                title: 'Please check your email...',
+                text: 'If this email is associated with an account, you will receive a mail.'
+              });
+            }
+          });
+        });
+      });

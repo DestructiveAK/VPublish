@@ -40,7 +40,12 @@ exports.signup = (req, res) => {
                 return res.status(500).send({msg: err.message});
             }
             require('../mail/confirmation.mail')(newUser, req, token);
-            res.send({msg: 'User account created successfully.'});
+            res.render('success',{
+                msg:'Account created successfully',
+                page:'home',
+                stat: 'success',
+                info: 'A verification email has been sent to your email.\nPlease check your email and verify your account'
+            })
         });
     });
 };
@@ -50,19 +55,23 @@ exports.login = (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
 
-    if (!email && !password) {
+    if (!email || !password) {
         return res.status(400).send({
             msg: 'No data received'
         });
     }
 
     User.findOne({email: email}, function (err, user) {
-        if (!user) return res.render('../public/login', {error: 'User not found.'});
+        if (!user) return res.render('../public/login', {error: 'Invalid Email or Password.'});
         if (!bcrypt.compareSync(password, user.password))
             return res.render('../public/login',{error: 'Invalid Email or Password.'});
         if (!user.isVerified)
             return res.render('../public/login', {error: 'User not verified.'});
-        req.session.user = user;
+        req.session.user = {
+            firstname: user.firstname,
+            lastname: user.lastname,
+            email: user.email
+        };
         res.redirect('/dashboard');
     });
 };
@@ -70,8 +79,10 @@ exports.login = (req, res) => {
 
 exports.logout = (req, res) => {
     if (req.session.user && req.cookies.user_logged) {
-        res.clearCookie('user_logged');
-        res.redirect('/');
+        req.session.destroy(() => {
+            res.clearCookie('user_logged');
+            res.redirect('/');
+        });
     } else {
         res.redirect('/login');
     }

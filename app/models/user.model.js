@@ -22,15 +22,14 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    date: {
-        type: Date,
-        default: Date.now
-    },
     isVerified: {
         type:Boolean,
         default: false
     }
-});
+},
+    {
+        timestamps: true
+    });
 
 //exporting user schema for use
 module.exports = mongoose.model('User', UserSchema);

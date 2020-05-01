@@ -1,0 +1,74 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width,initial-scale=1,shrink-to-fit=no')
+    title VPublish
+    link(rel='stylesheet' href='/assets/bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900')
+    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i')
+  body
+    nav.navbar.navbar-dark.navbar-expand-lg.fixed-top.bg-dark.navbar-custom
+      .container
+        a.navbar-brand(href='/') VPublish
+        button.navbar-toggler(data-toggle='collapse' data-target='#navbarResponsive')
+          span.navbar-toggler-icon
+        .collapse.navbar-collapse#navbarResponsive
+          ul.nav.navbar-nav.ml-auto
+            li.nav-item(role='presentation')
+              a.nav-link(href='/signup') Sign Up
+            li.nav-item(role='presentation')
+              a.nav-link(href='/login') Log In
+            li.nav-item(role='presentation')
+              a.nav-link(href='/admin') admin
+    header.masthead.text-center.text-white
+      .masthead-content
+        .container
+          h1.masthead-heading.mb-0 One Place For You
+          h2.masthead-subheading.mb-0 To Publish Your Research
+          a.btn.btn-primary.btn-xl.rounded-pill.mt-5(role='button' href='/signup') join us
+      .bg-circle-1.bg-circle
+      .bg-circle-2.bg-circle
+      .bg-circle-3.bg-circle
+      .bg-circle-4.bg-circle
+    section
+      .container
+        .row.align-items-center
+          .col-lg-6.order-lg-2
+            .p-5
+              img.img-fluid(src='/assets/img/create.svg')
+          .col-lg-6.order-lg-1
+            .p-5
+              h2.display-4 Prepare Paper
+              p Prepare your research paper with proper abstract, highlights and keywords. Poor English is one of the most common reasons for rejection. You can avoid this by having your manuscript edited properly. 
+    section
+      .container
+        .row.align-items-center
+          .col-lg-6.order-lg-1
+            .p-5
+              img.img-fluid(src='/assets/img/submit.svg')
+          .col-lg-6.order-lg-2
+            .p-5
+              h2.display-4 Submit and Revise
+              p
+                | You can submit your research paper online from anywhere. Just login to your account or create one if you don't have an account yet and submit your paper as simple as that. You can also revise it anytime you want.
+                br
+                | After successful submission your paper will be reviewed by reviewers and editors.
+    section
+      .container
+        .row.align-items-center
+          .col-lg-6.order-lg-2
+            .p-5
+              img.img-fluid(src='/assets/img/track.svg')
+          .col-lg-6.order-lg-1
+            .p-5
+              h2.display-4 Track Status
+              p
+                | You can track the status of your submitted paper online from anywhere around the globe.
+                br
+                | Just login to your and select the paper you want to track.
+    footer.py-5.bg-black
+      .container
+        p.text-center.text-white.m-0.small Copyright © VPublish 2020
+    script(src='/assets/js/jquery.min.js')
+    script(src='/assets/bootstrap/js/bootstrap.min.js')

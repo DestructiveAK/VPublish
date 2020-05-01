@@ -14,16 +14,18 @@ module.exports = (user, req, token) => {
     const email = {
         body: {
             name: user.firstname,
-            intro: 'Welcome to VPublish! We\'re very excited to have you on board.',
+            intro: 'You have received this email because a password reset request for your account was received.',
             action: {
-                instructions: 'To get started with VPublish, please click here:',
+                instructions: 'Click the button below to reset your password.' +
+                    'This link can only be used once.',
                 button: {
-                    color: '#22BC66',
-                    text: 'Confirm your account',
-                    link: 'http:\/\/' + req.headers.host + '\/confirmation\/' + token,
+                    color: '#DC4D2F',
+                    text: 'Reset your Password',
+                    link: 'http:\/\/' + req.headers.host + '\/reset\/' + token,
                 }
             },
-            outro: 'This link will expire in 12 hours.'
+            outro: 'This link will expire in 12 hours.' +
+                '\nIf you did not request a password reset, no further action is required on your part.'
         },
     };
 
@@ -32,7 +34,7 @@ module.exports = (user, req, token) => {
     const msg = {
         to: user.email,
         from: 'no-reply@vpublish.com',
-        subject: 'Confirm your account',
+        subject: 'Reset your password',
         html: emailTemplate,
     };
 
