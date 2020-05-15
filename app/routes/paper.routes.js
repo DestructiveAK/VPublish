@@ -62,9 +62,9 @@ module.exports = (app, mongoose) => {
                 abstract: abstract,
                 keywords: keywords,
                 authorId: authorId,
-                cover_letter: () => {if (coverLetter) return coverLetter;},
+                cover_letter: coverLetter,
                 manuscript: manuscript,
-                supplement: () => {if (supplement) return supplement;}
+                supplement: supplement
             });
             newPaper.save(err => {
                 if (err) {
@@ -79,7 +79,13 @@ module.exports = (app, mongoose) => {
 
     app.get('/paper/:filename/view', checkUser, (req, res) => {
         const fileName = req.params.filename;
-        res.set('Content-Type', 'application/pdf');
+        bucket.find({filename: fileName}).toArray((err, file) => {
+            res.set({
+                'Content-Type': file[0].contentType,
+                'Content-Length': `${file[0].length}`,
+            });
+        });
+
         bucket.openDownloadStreamByName(fileName).
             pipe(res).
             on('error', (err) => {
@@ -90,12 +96,42 @@ module.exports = (app, mongoose) => {
 
     app.get('/paper/:filename/download', checkUser, (req, res) => {
         const fileName = req.params.filename;
-        res.set('Content-Type', 'application/pdf');
-        res.set('Content-Disposition', 'attachment');
+        bucket.find({filename: fileName}).toArray((err, file) => {
+            res.set({
+                'Content-Type': file[0].contentType,
+                'Content-Length': `${file[0].length}`,
+                'Content-Disposition': 'attachment'
+            });
+        });
+
         bucket.openDownloadStreamByName(fileName)
             .pipe(res)
             .on('error', (err) => {
             console.log(err);
         });
     });
+
+    app.get('/paper/:id/delete', (req, res) => {
+        const paperId = req.params.id;
+        Paper.findOne({_id: paperId}, (err, paper) => {
+            if (!paper) return res.send('Requested operation cannot be processed.')
+            const fileNames = [];
+            if (paper.manuscript) fileNames.push(paper.manuscript.filename);
+            if (paper.cover_letter) fileNames.push(paper.cover_letter.filename);
+            if (paper.supplement) fileNames.push(paper.supplement.filename);
+            for (let fileName of fileNames) {
+                bucket.find({filename: fileName}).toArray((err, file) => {
+                    bucket.delete(file[0]._id, (err) => {
+                        if (err) {
+                            console.error(err);
+                            res.redirect('/dashboard');
+                        }
+                    });
+                });
+            }
+            paper.remove();
+            res.redirect('/dashboard');
+        });
+    });
+
 };
