@@ -83,17 +83,17 @@ app.use((req, res, next) => {
    }
 });
 
-
+//use pug view engine
 app.set('view engine', 'pug');
 app.set('views', __dirname + '/public/views')
 
 
+//use static files
+app.use('/assets', express.static(path.join(__dirname + '/public/assets')));
 
-app.use(express.static(path.join(__dirname + '/public')));
 
 
-
-//if user logged in set local variable user for rendering
+//if user logged in set local variable user
 app.use(function (req, res, next) {
     if (req.session.user && req.cookies.user_logged) {
         res.locals.user = req.session.user;
