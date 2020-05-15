@@ -60,7 +60,7 @@ html
                     td 2.
                     td Manuscript
                     td
-                      input(type='file' name='manuscript')
+                      input(type='file' name='manuscript' required)
                   tr
                     td 3.
                     td Supplementary Materials
@@ -79,15 +79,15 @@ html
     script(src='https://cdn.jsdelivr.net/npm/sweetalert2@9')
     script.
       $(function () {
-          $('.btn[type="submit"]').on('click', function () {
-            Swal.fire({
-              title: 'Uploading Files',
-              text: 'Please wait...',
-              imageUrl: '/assets/img/loading.svg',
-              imageWidth: 200,
-              imageHeight: 200,
-              imageAlt: 'Loading',
-              showConfirmButton: false
-            });
+        $('form').on('submit', function () {
+          Swal.fire({
+            title: 'Uploading Files',
+            text: 'Please wait...',
+            imageUrl: '/assets/img/loading.svg',
+            imageWidth: 200,
+            imageHeight: 200,
+            imageAlt: 'Loading',
+            showConfirmButton: false
           });
+        });
       });
