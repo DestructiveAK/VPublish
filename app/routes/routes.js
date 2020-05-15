@@ -1,4 +1,5 @@
 const { checkUser } = require('../middlewares/auth');
+const Paper = require('../models/paper.model');
 
 module.exports = (app) => {
 
@@ -26,7 +27,10 @@ module.exports = (app) => {
     //getting dashboard page for each user
     app.get('/dashboard', checkUser, function (req, res) {
         res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
-        res.render('dashboard');
+        Paper.find({authorId: req.session.user.email}, (err, papers) => {
+            if (papers.length === 0) return res.render('dashboard');
+            res.render('dashboard', {papers: papers});
+        });
     });
 
     //getting new_submission page for submitting new paper
