@@ -161,3 +161,29 @@
   }
 }
 
+.btn.btn-primary {
+  width: 7rem;
+}
+
+.text-center.text-capitalize.my-4 {
+  font-weight: 600;
+}
+
+.btn.action-button {
+  max-width: 250px;
+}
+
+.btn.btn-primary.btn-sm.btn-success {
+  margin: 7.5px;
+}
+
+.svg_icon {
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+  margin-right: .5rem;
+}
+
+.expanded {
+  transform: rotate(90deg);
+}

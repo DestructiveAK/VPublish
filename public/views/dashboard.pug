@@ -3,77 +3,76 @@ html
   head
     meta(charset='utf-8')
     meta(name='viewport' content='width=device-width,initial-scale=1,shrink-to-fit=no')
-    title v-con
-    link(rel='stylesheet' href='/assets/bootstrap/css/bootstrap.min.css')
-    link(rel='stylesheet' href='/assets/fonts/ionicons.min.css')
-    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css')
-    link(rel='stylesheet' href='/assets/css/Login-Form-Clean.css')
-    link(rel='stylesheet' href='/assets/css/Navigation-Clean.css')
-    link(rel='stylesheet' href='/assets/css/Navigation-with-Button.css')
-    link(rel='stylesheet' href='/assets/css/Registration-Form-with-Photo-1.css')
-    link(rel='stylesheet' href='/assets/css/Registration-Form-with-Photo.css')
-    link(rel='stylesheet' href='/assets/css/styles.css')
+    title dashboard
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css')
+    link(rel='stylesheet' href='/assets/css/dashboard.css')
   body
-    nav.navbar.navbar-light.navbar-expand-md.navigation-clean
-      .container
-        a.navbar-brand(href='#') VIT
-        button.navbar-toggler(data-toggle='collapse' data-target='#navcol-1')
-          span.sr-only Toggle navigation
-          span.navbar-toggler-icon
-        .collapse.navbar-collapse#navcol-1
-          ul.nav.navbar-nav.ml-auto
-            li.nav-item(role='presentation')
-            li.nav-item(role='presentation')
-            li.nav-item.text-center(role='presentation')
-            li.nav-item.dropdown
-              a.dropdown-toggle.nav-link(data-toggle='dropdown' aria-expanded='false' href='#') Dropdown 
-              .dropdown-menu(role='menu')
-                ul.list-group.user-detail
-                  li.list-group-item.text-center
-                    img.avatar(alt='Avatar' src='/assets/img/avatar.jpg')
-                  li.list-group-item
-                    span Name
-                  li.list-group-item
-                    span Email
-                  li.list-group-item
-                    a#manage-account(href='#') Manage your account
-                  li.list-group-item
-                    a#logout(href='#') Logout
-    .dashboard-parent
-      .shadow-lg.bounce.animated.dashboard-child
-        h3
-          strong
-            span(style='text-decoration: underline;') Actions
-        ul.list-group
-          li.list-group-item
-            a.action-links(href='/create') New Submission
-          li.list-group-item
-            a.action-links(href='#') Edit Submission
-          li.list-group-item
-            a.action-links(href='#') View Submission
-          li.list-group-item
-            a.action-links(href='#') Withdraw Submission
-          li.list-group-item
-            a.action-links(href='#') Letter to Editor
-        .paper-list
-          h1 View
-          .table-responsive
-            table.table
-              thead
-                tr
-                  th S. No
-                  th Title
-                  th Manuscript Name
-                  th Last Update
-                  th Status
-              tbody
-                tr
-                  td Cell 1
-                  td Cell 2
-                  td Cell 3
-                  td Cell 4
-                  td Cell 5
-    script(src='/assets/js/jquery.min.js')
-    script(src='/assets/bootstrap/js/bootstrap.min.js')
-    script(src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js' crossorigin='anonymous')
-    script(src='/assets/js/new-submission.js')
+    div
+      nav.navbar.navbar-light.navbar-expand-md.navigation-clean
+        .container
+          a.navbar-brand(href='/') VPublish
+          button.navbar-toggler(data-toggle='collapse' data-target='#navcol-1')
+            span.sr-only Toggle navigation
+            span.navbar-toggler-icon
+          .collapse.navbar-collapse#navcol-1
+            ul.nav.navbar-nav.ml-auto
+              li.nav-item(role='presentation')
+                a.nav-link(href='/create') New Paper
+              li.nav-item(role='presentation')
+                a.nav-link(href='/profile') Profile
+              li.nav-item(role='presentation')
+                a.nav-link(href='/logout') Logout
+    .container.p-1.mb-4
+      .papers.mt-5
+        h1.text-center.text-capitalize.my-4 Paper Details
+        if (!papers)
+          div.border.rounded-lg.text-center.p-3.m-3.mt-5
+            h4.text-center You don't have any paper
+        else
+          each paper in papers
+            .paper.m-3.text-left.border.rounded-lg
+              a.btn.btn-light.btn-block.text-left.font-weight-bold.toggle(role='button')
+                svg.svg_icon(viewBox='0 0 20 20' fill='currentColor')
+                  path(fill-rule='evenodd' d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z' clip-rule='evenodd')
+                span=paper.title
+              .paper-details.p-3(style='display: none;')
+                .paper-authors.mb-4.border-bottom.border-top
+                  .author
+                    span.font-weight-bold Author : 
+                    span=user.firstname + ' ' + user.lastname
+                  if (paper.co_author)
+                    .co-author
+                      span.font-weight-bold Co-authors : 
+                .paper-id
+                  h5.font-weight-bold Paper ID :
+                  .id.border.p-2.rounded-lg.overflow-auto=paper._id
+                .paper-abstract
+                  h5.font-weight-bold Abstract :
+                  .abstract.border.p-2.rounded-lg.overflow-auto=paper.abstract
+                .paper-keywords
+                  h5.font-weight-bold Keywords :
+                  .keywords.p-2.border.rounded-lg.overflow-auto=paper.keywords
+                if (paper.cover_letter)
+                  div
+                    h5.font-weight-bold Cover Letter :
+                    .paper-cover-letter.m-2
+                      a.btn.btn-primary.btn-sm.btn-success(role='button' href=`/paper/${paper.cover_letter.filename}/view`) View
+                      a.btn.btn-primary.btn-sm.btn-success(role='button' href=`/paper/${paper.cover_letter.filename}/download`) Download
+                if (paper.manuscript)
+                  div
+                    h5.font-weight-bold Manuscript :
+                    .paper-manuscript.m-2
+                      a.btn.btn-primary.btn-sm.btn-success(role='button' href=`/paper/${paper.manuscript.filename}/view`) View
+                      a.btn.btn-primary.btn-sm.btn-success(role='button' href=`/paper/${paper.manuscript.filename}/download`) Download
+                if (paper.supplement)
+                  div
+                    h5.font-weight-bold Supplementary Materials :
+                    .paper-supplement.m-2
+                      a.btn.btn-primary.btn-sm.btn-success(role='button' href=`/paper/${paper.supplement.filename}/view`) View
+                      a.btn.btn-primary.btn-sm.btn-success(role='button' href=`/paper/${paper.supplement.filename}/download`) Download
+                .paper-actions.p-2.pt-5.border-top
+                  a.btn.btn-info.btn-block.font-weight-bold.mb-3.action-button(role='button' href=`/paper/${paper._id}/edit`) Edit Paper
+                  a.btn.btn-danger.btn-block.font-weight-bold.action-button(role='button' href=`/paper/${paper._id}/delete`) Delete Paper
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js')
+    script(src='/assets/js/dashboard.js')
