@@ -15,12 +15,20 @@ html
           span.navbar-toggler-icon
         .collapse.navbar-collapse#navbarResponsive
           ul.nav.navbar-nav.ml-auto
-            li.nav-item(role='presentation')
-              a.nav-link(href='/signup') Sign Up
-            li.nav-item(role='presentation')
-              a.nav-link(href='/login') Log In
-            li.nav-item(role='presentation')
-              a.nav-link(href='/admin') admin
+            if locals.user
+              li.nav-item(role='presentation')
+                a.nav-link(href='/dashboard') Dashboard
+              li.nav-item(role='presentation')
+                a.nav-link(href='/logout') Logout
+            if !locals.user
+              li.nav-item(role='presentation')
+                a.nav-link(href='/signup') Sign Up
+              li.nav-item(role='presentation')
+                a.nav-link(href='/login') Log In
+              li.nav-item(role='presentation')
+                a.nav-link(href='/reviewer') Reviewer
+              li.nav-item(role='presentation')
+                a.nav-link(href='/admin') Admin
     header.masthead.text-center.text-white
       .masthead-content
         .container
