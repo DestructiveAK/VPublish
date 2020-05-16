@@ -1,48 +1,66 @@
-module.exports = (app, mongoose) => {
-    const { checkUser } = require('../middlewares/auth');
-    const Paper = require('../models/paper.model');
-    const multer = require('multer');
-    const GridFsStorage = require('multer-gridfs-storage');
-    const crypto = require('crypto');
-    const path = require('path');
-    const connection = mongoose.connection;
+const { checkUser } = require('../middlewares/auth');
+const Paper = require('../models/paper.model');
+const multer = require('multer');
+const GridFsStorage = require('multer-gridfs-storage');
+const crypto = require('crypto');
+const path = require('path');
+const router = require('express').Router();
+const dbConfig = require('../../config/database.config');
+const mongoose = require('mongoose');
+mongoose.connect(dbConfig.URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+}).then(() => {
+    console.log("Successfully connected to the database");
+}).catch(err => {
+    console.log("Could not connect to the database: ", err);
+    process.exit();
+});
 
-    let bucket;
-    connection.once('open', ()=> {
-        bucket = new mongoose.mongo.GridFSBucket(connection.db, {
-            bucketName: 'files'
-        });
+const connection = mongoose.connection;
+
+let bucket;
+connection.once('open', ()=> {
+    bucket = new mongoose.mongo.GridFSBucket(connection.db, {
+        bucketName: 'files'
     });
+});
 
-    const storage = new GridFsStorage({
-        db: connection,
-        file: (req, file) => {
-            return new Promise((resolve, reject) => {
-                crypto.randomBytes(16, (err, buf) => {
-                    if (err) {
-                        return reject(err);
-                    }
-                    const filename = buf.toString('hex') + path.extname(file.originalname);
-                    const fileInfo = {
-                        filename: filename,
-                        bucketName: 'files'
-                    };
-                    resolve(fileInfo);
-                });
+const storage = new GridFsStorage({
+    db: connection,
+    file: (req, file) => {
+        return new Promise((resolve, reject) => {
+            crypto.randomBytes(16, (err, buf) => {
+                if (err) {
+                    return reject(err);
+                }
+                const filename = buf.toString('hex') + path.extname(file.originalname);
+                const fileInfo = {
+                    filename: filename,
+                    bucketName: 'files'
+                };
+                resolve(fileInfo);
             });
-        }
-    });
+        });
+    }
+});
 
-    const upload = multer({storage});
+const upload = multer({storage});
 
-    //Create new paper
-    app.post('/create',
-        checkUser,
-        upload.fields([
-            {name: 'cover-letter', maxCount: 1},
-            {name: 'manuscript', maxCount: 1},
-            {name: 'supplement', maxCount: 1}]),
-        function(req, res) {
+router.get('/create', checkUser, function (req, res) {
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+    res.render('create');
+});
+
+//Create new paper
+router.post('/create',
+    checkUser,
+    upload.fields([
+        {name: 'cover-letter', maxCount: 1},
+        {name: 'manuscript', maxCount: 1},
+        {name: 'supplement', maxCount: 1}]),
+    function(req, res) {
         const title = req.body.title;
         const abstract = req.body.abstract;
         const keywords = req.body.keywords;
@@ -77,61 +95,61 @@ module.exports = (app, mongoose) => {
 
 
 
-    app.get('/paper/:filename/view', checkUser, (req, res) => {
-        const fileName = req.params.filename;
-        bucket.find({filename: fileName}).toArray((err, file) => {
-            res.set({
-                'Content-Type': file[0].contentType,
-                'Content-Length': `${file[0].length}`,
-            });
-        });
-
-        bucket.openDownloadStreamByName(fileName).
-            pipe(res).
-            on('error', (err) => {
-                console.log(err);
+router.get('/:filename/view', checkUser, (req, res) => {
+    const fileName = req.params.filename;
+    bucket.find({filename: fileName}).toArray((err, file) => {
+        res.set({
+            'Content-Type': file[0].contentType,
+            'Content-Length': `${file[0].length}`,
         });
     });
 
+    bucket.openDownloadStreamByName(fileName).
+    pipe(res).
+    on('error', (err) => {
+        console.log(err);
+    });
+});
 
-    app.get('/paper/:filename/download', checkUser, (req, res) => {
-        const fileName = req.params.filename;
-        bucket.find({filename: fileName}).toArray((err, file) => {
-            res.set({
-                'Content-Type': file[0].contentType,
-                'Content-Length': `${file[0].length}`,
-                'Content-Disposition': 'attachment'
-            });
+
+router.get('/:filename/download', checkUser, (req, res) => {
+    const fileName = req.params.filename;
+    bucket.find({filename: fileName}).toArray((err, file) => {
+        res.set({
+            'Content-Type': file[0].contentType,
+            'Content-Length': `${file[0].length}`,
+            'Content-Disposition': 'attachment'
         });
+    });
 
-        bucket.openDownloadStreamByName(fileName)
-            .pipe(res)
-            .on('error', (err) => {
+    bucket.openDownloadStreamByName(fileName)
+        .pipe(res)
+        .on('error', (err) => {
             console.log(err);
         });
-    });
+});
 
-    app.get('/paper/:id/delete', (req, res) => {
-        const paperId = req.params.id;
-        Paper.findOne({_id: paperId}, (err, paper) => {
-            if (!paper) return res.send('Requested operation cannot be processed.')
-            const fileNames = [];
-            if (paper.manuscript) fileNames.push(paper.manuscript.filename);
-            if (paper.cover_letter) fileNames.push(paper.cover_letter.filename);
-            if (paper.supplement) fileNames.push(paper.supplement.filename);
-            for (let fileName of fileNames) {
-                bucket.find({filename: fileName}).toArray((err, file) => {
-                    bucket.delete(file[0]._id, (err) => {
-                        if (err) {
-                            console.error(err);
-                            return res.sendStatus(400);
-                        }
-                    });
+router.get('/:id/delete', (req, res) => {
+    const paperId = req.params.id;
+    Paper.findOne({_id: paperId}, (err, paper) => {
+        if (!paper) return res.send('Requested operation cannot be processed.')
+        const fileNames = [];
+        if (paper.manuscript) fileNames.push(paper.manuscript.filename);
+        if (paper.cover_letter) fileNames.push(paper.cover_letter.filename);
+        if (paper.supplement) fileNames.push(paper.supplement.filename);
+        for (let fileName of fileNames) {
+            bucket.find({filename: fileName}).toArray((err, file) => {
+                bucket.delete(file[0]._id, (err) => {
+                    if (err) {
+                        console.error(err);
+                        return res.sendStatus(400);
+                    }
                 });
-            }
-            paper.remove();
-            res.sendStatus(200);
-        });
+            });
+        }
+        paper.remove();
+        res.sendStatus(200);
     });
+});
 
-};
+module.exports = router;

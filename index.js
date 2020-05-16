@@ -9,13 +9,15 @@ const MongoStore = require('connect-mongo')(session);
 const app = express();
 const path = require('path');
 const cron = require('node-cron');
-
+const authorRoutes = require('./app/routes/author.routes');
+const reviewerRoutes = require('./app/routes/reviewer.routes');
+const publicRoutes = require('./app/routes/public.routes');
+const paperRoutes = require('./app/routes/paper.routes');
 
 //define listening port
 const PORT = 8080;
 
 
-mongoose.Promise = global.Promise;
 mongoose.connect(dbConfig.URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -30,7 +32,7 @@ mongoose.connect(dbConfig.URL, {
 
 cron.schedule('0 0 0 * * *', () => {
     console.log('\n\n********** Cron job started **********\n\nDeleting unverified user accounts...\n')
-    const User = require('./app/models/user.model');
+    const User = require('./app/models/author.model');
     const date = new Date();
     date.setDate(date.getDate() - 7);
     User.deleteMany({
@@ -102,21 +104,17 @@ app.use(function (req, res, next) {
 })
 
 
-//include public routes
-require('./app/routes/routes')(app);
-
-//include user routes
-require('./app/routes/user.routes')(app);
-
-//include paper routes
-require('./app/routes/paper.routes') (app, mongoose);
-
-// route for handling 404 requests(unavailable routes)
+app.use('/', publicRoutes);
+app.use('/', authorRoutes);
+app.use('/reviewer', reviewerRoutes);
+app.use('/paper', paperRoutes);
 app.use(function (req, res) {
     res.status(404).render('not-found')
 });
 
-//Listen for call on port PORT
+
+
+
 app.listen(PORT, () => {
     console.log("Server is running on port ", PORT);
 });

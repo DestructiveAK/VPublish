@@ -1,11 +1,10 @@
-module.exports = (app) => {
-    const User = require('../models/user.model');
-    const Token = require('../models/token.model');
-    const bcrypt = require('bcryptjs');
-    const { generateToken } = require('../middlewares/token');
 
-    //Create new user account
-    app.post('/signup', (req, res) => {
+const Token = require('../models/token.model');
+const bcrypt = require('bcryptjs');
+const { generateToken } = require('../middlewares/token');
+
+exports.signup = (User) => {
+    return (req, res) => {
         const firstName = req.body.firstname;
         const lastName = req.body.lastname;
         const email = req.body.email;
@@ -56,10 +55,11 @@ module.exports = (app) => {
                     '\nPlease check your email and verify your account'
             });
         });
-    });
+    }
+}
 
-
-    app.post('/login', (req, res) => {
+exports.login = (User) => {
+    return (req, res) => {
         const email = req.body.email;
         const password = req.body.password;
 
@@ -78,26 +78,29 @@ module.exports = (app) => {
             req.session.user = {
                 firstname: user.firstname,
                 lastname: user.lastname,
-                email: user.email
+                email: user.email,
+                role: user.role
             };
-            res.redirect('/dashboard');
+            res.redirect('dashboard');
         });
-    });
+    }
+}
 
-    //Logout
-    app.get('/logout', (req, res) => {
-        if (req.session.user && req.cookies.user_logged) {
-            req.session.destroy(() => {
-                res.clearCookie('user_logged');
-                res.redirect('/');
-            });
-        } else {
-            res.redirect('/login');
-        }
-    });
+exports.logout = () => {
+    return (req, res) => {
+    if (req.session.user && req.cookies.user_logged) {
+        req.session.destroy(() => {
+            res.clearCookie('user_logged');
+            res.redirect('/');
+        });
+    } else {
+        res.redirect('/');
+    }
+}
+}
 
-
-    app.post('/forgot', (req, res) => {
+exports.forgot = (User) => {
+    return (req, res) => {
         const email = req.body.email;
         if (!email) return res.send({error: 'No email provided'});
         User.findOne({email: email}, (err, user) => {
@@ -107,10 +110,11 @@ module.exports = (app) => {
             require('../mail/forgot.mail')(user, req, token);
         });
         res.end();
-    });
+    }
+}
 
-    //route for token verification for account confirmation
-    app.get('/confirmation/:token', function (req, res) {
+exports.confirmation = (User) => {
+    return (req, res) => {
         if (!req.params.token) return res.status(400).send({msg: 'No data received.'});
 
         // Find a matching token
@@ -151,9 +155,11 @@ module.exports = (app) => {
                     console.error(err);
                 });
         });
-    });
+    }
+}
 
-    app.get('/reset/:token', (req, res) => {
+exports.resetGet = () => {
+    return (req, res) => {
         if (!req.params.token) return res.render('forbidden');
         Token.findOne({token: req.params.token})
             .then(token => {
@@ -163,9 +169,11 @@ module.exports = (app) => {
             .catch(e => {
                 console.error(e);
             });
-    });
+    }
+}
 
-    app.post('/reset/:token', (req, res) => {
+exports.resetPost = (User) => {
+    return (req, res) => {
         if (!req.params.token) return res.sendStatus(400);
         Token.findOne({token: req.params.token})
             .then(token => {
@@ -184,5 +192,5 @@ module.exports = (app) => {
                         res.sendStatus(200);
                     });
             });
-    });
-};
+    }
+}
