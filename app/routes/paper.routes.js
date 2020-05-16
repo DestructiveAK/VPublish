@@ -124,13 +124,13 @@ module.exports = (app, mongoose) => {
                     bucket.delete(file[0]._id, (err) => {
                         if (err) {
                             console.error(err);
-                            res.redirect('/dashboard');
+                            return res.sendStatus(400);
                         }
                     });
                 });
             }
             paper.remove();
-            res.redirect('/dashboard');
+            res.sendStatus(200);
         });
     });
 
