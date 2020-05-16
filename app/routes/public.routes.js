@@ -4,7 +4,8 @@ const router = require('express').Router();
 
 //getting home page
 router.get('/', function (req, res) {
-    res.render('home')
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+    res.render('home');
 });
 
 
