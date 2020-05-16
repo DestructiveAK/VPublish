@@ -71,8 +71,9 @@ html
                       a.btn.btn-primary.btn-sm.btn-success(role='button' href=`/paper/${paper.supplement.filename}/view`) View
                       a.btn.btn-primary.btn-sm.btn-success(role='button' href=`/paper/${paper.supplement.filename}/download`) Download
                 .paper-actions.p-2.pt-5.border-top
-                  a.btn.btn-info.btn-block.font-weight-bold.mb-3.action-button(role='button' href=`/paper/${paper._id}/edit`) Edit Paper
-                  a.btn.btn-danger.btn-block.font-weight-bold.action-button(role='button' href=`/paper/${paper._id}/delete`) Delete Paper
+                  a.btn.btn-info.btn-block.font-weight-bold.mb-3.action-button.paper-edit(role='button' href=`/paper/${paper._id}/edit`) Edit Paper
+                  a.btn.btn-danger.btn-block.font-weight-bold.action-button.paper-delete(role='button' href=`/paper/${paper._id}/delete`) Delete Paper
     script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js')
+    script(src='https://cdn.jsdelivr.net/npm/sweetalert2@9')
     script(src='/assets/js/dashboard.js')
