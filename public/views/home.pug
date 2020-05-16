@@ -15,9 +15,13 @@ html
           span.navbar-toggler-icon
         .collapse.navbar-collapse#navbarResponsive
           ul.nav.navbar-nav.ml-auto
-            if locals.user
+            if locals.user && locals.user.role === 'author'
               li.nav-item(role='presentation')
                 a.nav-link(href='/dashboard') Dashboard
+            if locals.user && locals.user.role === 'reviewer'
+              li.nav-item(role='presentation')
+                a.nav-link(href='/reviewer/dashboard') Dashboard
+            if locals.user
               li.nav-item(role='presentation')
                 a.nav-link(href='/logout') Logout
             if !locals.user
@@ -26,7 +30,7 @@ html
               li.nav-item(role='presentation')
                 a.nav-link(href='/login') Log In
               li.nav-item(role='presentation')
-                a.nav-link(href='/reviewer') Reviewer
+                a.nav-link(href='/reviewer/login') Reviewer
               li.nav-item(role='presentation')
                 a.nav-link(href='/admin') Admin
     header.masthead.text-center.text-white

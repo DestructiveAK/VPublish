@@ -14,7 +14,7 @@ html
   body.min-h-screen.bg-gray-100.text-gray-900.flex.justify-center
     .max-w-screen-xl.m-0.bg-white.shadow.flex.justify-center.flex-1.mt-5.mb-5(class='sm:m-20 sm:rounded-lg')
       .p-6(class='sm:p-12 xl:w-5/12 lg:w-1/2')
-        form.mt-12.flex.flex-col.items-center(method='post' action='/signup')
+        form.mt-12.flex.flex-col.items-center(method='post' action=urlSignUp)
           h1.text-2xl.font-extrabold(class='xl:text-3xl').
             
             Sign up
@@ -40,8 +40,6 @@ html
                   
                   Sign Up
               .text-center.mt-4
-                a(href='/login') Already have an account ?
+                a(href=urlLogin) Already have an account ?
       .flex-1.bg-indigo-100.text-center.hidden(class='lg:flex')
         .m-12.w-full.bg-contain.bg-center.bg-no-repeat(class='xl:m-16' style='background-image: url(\'/assets/img/signup_img.svg\');')
-
-    script(src='/assets/bootstrap/js/bootstrap.min.js')

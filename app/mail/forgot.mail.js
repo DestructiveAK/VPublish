@@ -21,7 +21,7 @@ module.exports = (user, req, token) => {
                 button: {
                     color: '#DC4D2F',
                     text: 'Reset your Password',
-                    link: 'http:\/\/' + req.headers.host + '\/reset\/' + token,
+                    link: 'http:\/\/' + req.headers.host + req.baseUrl + '\/reset\/' + token,
                 }
             },
             outro: 'This link will expire in 12 hours.' +

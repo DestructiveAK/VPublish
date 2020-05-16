@@ -9,7 +9,7 @@ html
     link(rel='stylesheet' href='/assets/css/login.css')
   body
     .login-dark
-      form(method='post' action='/login')
+      form(method='post' action=urlLogin)
         h2.sr-only Log in
         .illustration
           i.icon.ion-ios-locked-outline
@@ -23,7 +23,8 @@ html
         .form-group
           button.btn.btn-primary.btn-block(type='submit') Log In
         a.forgot(id='forgot' style='cursor: pointer') Forgot your password?
-        a.forgot(href='/signup') Don't have an account?
+        if signUp
+          a.forgot(href='signup') Don't have an account?
     script(src='/assets/js/jquery.min.js')
     script(src='/assets/bootstrap/js/bootstrap.min.js')
     script(src='https://cdn.jsdelivr.net/npm/sweetalert2@9')
@@ -44,7 +45,7 @@ html
             if (result.value) {
               $.ajax({
                 type: 'post',
-                url: '/forgot',
+                url: urlForgot,
                 data: {'email': result.value},
                 cache: false,
               });

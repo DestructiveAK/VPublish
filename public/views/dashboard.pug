@@ -16,18 +16,19 @@ html
             span.navbar-toggler-icon
           .collapse.navbar-collapse#navcol-1
             ul.nav.navbar-nav.ml-auto
+              if (locals.user.role === 'author')
+                li.nav-item(role='presentation')
+                  a.nav-link(href='/paper/create') New Paper
               li.nav-item(role='presentation')
-                a.nav-link(href='/create') New Paper
+                a.nav-link(href='profile') Profile
               li.nav-item(role='presentation')
-                a.nav-link(href='/profile') Profile
-              li.nav-item(role='presentation')
-                a.nav-link(href='/logout') Logout
+                a.nav-link(href='logout') Logout
     .container.p-1.mb-4
       .papers.mt-5
         h1.text-center.text-capitalize.my-4 Paper Details
         if (!papers)
           div.border.rounded-lg.text-center.p-3.m-3.mt-5
-            h4.text-center You don't have any paper
+            h4.text-center No paper exists
         else
           each paper in papers
             .paper.m-3.text-left.border.rounded-lg
