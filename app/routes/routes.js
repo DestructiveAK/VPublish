@@ -38,4 +38,9 @@ module.exports = (app) => {
         res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
         res.render('create');
     });
+
+    //Temporary routes for admin and reviewer
+    app.get(['/admin', '/reviewer'], function (req, res) {
+        res.render('forbidden');
+    });
 };
