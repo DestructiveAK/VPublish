@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 //creating database schema for storing user data
-const UserSchema = mongoose.Schema({
+const AuthorSchema = mongoose.Schema({
     firstname: {
         type: String,
         required: true,
@@ -25,6 +25,10 @@ const UserSchema = mongoose.Schema({
     isVerified: {
         type:Boolean,
         default: false
+    },
+    role: {
+        type: String,
+        default: 'author'
     }
 },
     {
@@ -32,5 +36,5 @@ const UserSchema = mongoose.Schema({
     });
 
 //exporting user schema for use
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('Author', AuthorSchema);
 
