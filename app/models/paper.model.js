@@ -13,6 +13,10 @@ const PaperSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    authorName: {
+        type: String,
+        required: true
+    },
     authorId: {
         type: String,
         required: true

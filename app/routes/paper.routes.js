@@ -64,6 +64,7 @@ router.post('/create',
         const title = req.body.title;
         const abstract = req.body.abstract;
         const keywords = req.body.keywords;
+        const authorName = req.body.firstname + ' ' + req.body.lastname;
         const authorId = req.body.email;
         const coverLetter = (req.files['cover-letter'] !== undefined) ? req.files['cover-letter'][0] : null;
         const manuscript = req.files['manuscript'][0];
@@ -79,6 +80,7 @@ router.post('/create',
                 title: title,
                 abstract: abstract,
                 keywords: keywords,
+                authorName: authorName,
                 authorId: authorId,
                 cover_letter: coverLetter,
                 manuscript: manuscript,
