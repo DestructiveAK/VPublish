@@ -31,10 +31,10 @@ html
             h1.text-uppercase.text-center.fs-title Curresponding Authors
             .form-group
               label First Name
-              input.form-control(type='text' value=locals.user.firstname readonly)
+              input.form-control(type='text' value=locals.user.firstname readonly name='firstname')
             .form-group
               label Last Name
-              input.form-control(type='text' value=locals.user.lastname readonly)
+              input.form-control(type='text' value=locals.user.lastname readonly name='lastname')
             .form-group
               label Email
               input.form-control(type='email' value=locals.user.email readonly name='email')
