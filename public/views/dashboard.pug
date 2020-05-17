@@ -6,6 +6,12 @@ html
     title dashboard
     link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css')
     link(rel='stylesheet' href='/assets/css/dashboard.css')
+    style.
+      .title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
   body
     div
       nav.navbar.navbar-light.navbar-expand-md.navigation-clean
@@ -33,9 +39,12 @@ html
           each paper in papers
             .paper.m-3.text-left.border.rounded-lg
               a.btn.btn-light.btn-block.text-left.font-weight-bold.toggle(role='button')
-                svg.svg_icon(viewBox='0 0 20 20' fill='currentColor')
-                  path(fill-rule='evenodd' d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z' clip-rule='evenodd')
-                span=paper.title
+                div.d-flex.justify-content-between
+                  div.d-inline.title
+                    svg.svg_icon(viewBox='0 0 20 20' fill='currentColor')
+                      path(fill-rule='evenodd' d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z' clip-rule='evenodd')
+                    span=paper.title
+                  div.d-inline.bg-success.px-3.rounded-pill.text-white.font-weight-normal.text-capitalize=paper.status
               .paper-details.p-3(style='display: none;')
                 .paper-authors.mb-4.border-bottom.border-top
                   .author

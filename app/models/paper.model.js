@@ -39,6 +39,11 @@ const PaperSchema = mongoose.Schema({
     supplement: {
         type: Object,
         required: false
+    },
+    status: {
+        type: String,
+        required: true,
+        default: 'Submitted'
     }
     },
     {
