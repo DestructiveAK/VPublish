@@ -22,8 +22,9 @@ html
           input.form-control(type='password' name='password' placeholder='Password' required)
         .form-group
           button.btn.btn-primary.btn-block(type='submit') Log In
-        a.forgot(id='forgot' style='cursor: pointer') Forgot your password?
-        if signUp
+        if forgotLink
+          a.forgot(id='forgot' style='cursor: pointer') Forgot your password?
+        if signUpLink
           a.forgot(href='signup') Don't have an account?
     script(src='/assets/js/jquery.min.js')
     script(src='/assets/bootstrap/js/bootstrap.min.js')

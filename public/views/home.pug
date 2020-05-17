@@ -21,6 +21,9 @@ html
             if locals.user && locals.user.role === 'reviewer'
               li.nav-item(role='presentation')
                 a.nav-link(href='/reviewer/dashboard') Dashboard
+            if locals.user && locals.user.role === 'admin'
+              li.nav-item(role='presentation')
+                a.nav-link(href='/admin/dashboard')
             if locals.user
               li.nav-item(role='presentation')
                 a.nav-link(href='/logout') Logout
@@ -32,7 +35,7 @@ html
               li.nav-item(role='presentation')
                 a.nav-link(href='/reviewer/login') Reviewer
               li.nav-item(role='presentation')
-                a.nav-link(href='/admin') Admin
+                a.nav-link(href='/admin/login') Admin
     header.masthead.text-center.text-white
       .masthead-content
         .container
