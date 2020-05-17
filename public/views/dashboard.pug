@@ -22,6 +22,8 @@ html
             span.navbar-toggler-icon
           .collapse.navbar-collapse#navcol-1
             ul.nav.navbar-nav.ml-auto
+              li.nav-item(role='presentation')
+                a.nav-link(href='/') Home
               if (locals.user.role === 'author')
                 li.nav-item(role='presentation')
                   a.nav-link(href='/paper/create') New Paper
