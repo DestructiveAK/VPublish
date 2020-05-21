@@ -28,7 +28,9 @@ html
                 li.nav-item(role='presentation')
                   a.nav-link(href='/paper/create') New Paper
               li.nav-item(role='presentation')
-                a.nav-link(href='profile') Profile
+                a.nav-link(href='profile')
+                  img.d-none.d-lg-inline.border.rounded-circle.img-profile.mr-1(src='/assets/img/avatar.svg' height='25px' width='25px')
+                  span Profile
               li.nav-item(role='presentation')
                 a.nav-link(href='logout') Logout
     .container.p-1.mb-4
@@ -55,6 +57,10 @@ html
                   if (paper.co_author)
                     .co-author
                       span.font-weight-bold Co-authors : 
+                  if paper.reviewerId
+                    .reviewer
+                      span.font-weight-bold Reviewer :
+                      span=paper.reviewerName
                 .paper-id
                   h5.font-weight-bold Paper ID :
                   .id.border.p-2.rounded-lg.overflow-auto=paper._id
@@ -82,10 +88,17 @@ html
                     .paper-supplement.m-2
                       a.btn.btn-primary.btn-sm.btn-success(role='button' href=`/paper/${paper.supplement.filename}/view`) View
                       a.btn.btn-primary.btn-sm.btn-success(role='button' href=`/paper/${paper.supplement.filename}/download`) Download
-                if locals.user.role === 'author'
-                  .paper-actions.p-2.pt-5.border-top
+                .paper-actions.p-2.pt-5.border-top
+                  if locals.user.role === 'author'
                     a.btn.btn-info.btn-block.font-weight-bold.mb-3.action-button.paper-edit(role='button' href=`/paper/${paper._id}/edit`) Edit Paper
                     a.btn.btn-danger.btn-block.font-weight-bold.action-button.paper-delete(role='button' href=`/paper/${paper._id}/delete`) Delete Paper
+                  if locals.user.role === 'reviewer'
+                    if paper.status === 'Submitted'
+                      a.btn.btn-info.btn-block.font-weight-bold.mb-3.action-button.paper-review(role='button' href=`review/${paper._id}`) Review
+                    if paper.status === 'Under Review' && paper.reviewerId === locals.user.email
+                      a.btn.btn-success.btn-block.font-weight-bold.mb-3.action-button.paper-accept(role='button' href=`accept/${paper._id}`) Accept
+                      a.btn.btn-warning.btn-block.font-weight-bold.action-button.paper-revision(role='button' href=``) Mark For Revision
+                      a.btn.btn-danger.btn-block.font-weight-bold.action-button.paper-reject(role='button' href=`accept/${paper._id}`) Reject
     script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js')
     script(src='https://cdn.jsdelivr.net/npm/sweetalert2@9')

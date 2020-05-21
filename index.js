@@ -13,6 +13,7 @@ const authorRoutes = require('./app/routes/author.routes');
 const reviewerRoutes = require('./app/routes/reviewer.routes');
 const publicRoutes = require('./app/routes/public.routes');
 const paperRoutes = require('./app/routes/paper.routes');
+const adminRoute = require('./app/routes/admin.route');
 
 //define listening port
 const PORT = 8080;
@@ -87,7 +88,7 @@ app.use((req, res, next) => {
 
 //use pug view engine
 app.set('view engine', 'pug');
-app.set('views', __dirname + '/public/views')
+app.set('views', path.join(__dirname + '/public/views'));
 
 
 //use static files
@@ -107,12 +108,17 @@ app.use(function (req, res, next) {
 app.use('/', publicRoutes);
 app.use('/', authorRoutes);
 app.use('/reviewer', reviewerRoutes);
+app.use('/admin', adminRoute);
 app.use('/paper', paperRoutes);
 app.use(function (req, res) {
     res.status(404).render('not-found')
 });
 
-
+process.on('SIGINT', function () {
+    mongoose.connection.close(function () {
+        process.exit(0);
+    });
+});
 
 
 app.listen(PORT, () => {

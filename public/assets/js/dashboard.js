@@ -1,6 +1,6 @@
 $(function () {
     $('.toggle').on('click', function () {
-        $(this).children('.svg_icon').toggleClass('expanded');
+        $(this).find('.svg_icon').toggleClass('expanded');
         $(this).siblings().slideToggle(300);
     });
 

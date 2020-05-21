@@ -55,5 +55,17 @@ $(function () {
 
     });
 
-   
+
+    $('form').on('submit', function () {
+        Swal.fire({
+            title: 'Uploading Files',
+            text: 'Please wait...',
+            imageUrl: '/assets/img/loading.svg',
+            imageWidth: 200,
+            imageHeight: 200,
+            imageAlt: 'Loading',
+            showConfirmButton: false
+        });
+    });
+
 });

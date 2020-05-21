@@ -77,17 +77,17 @@ html
     script(src='/assets/bootstrap/js/bootstrap.min.js')
     script(src='/assets/js/create.js')
     script(src='https://cdn.jsdelivr.net/npm/sweetalert2@9')
-    script.
-      $(function () {
-        $('form').on('submit', function () {
+    if title
+      script.
+        $(function () {
           Swal.fire({
-            title: 'Uploading Files',
-            text: 'Please wait...',
-            imageUrl: '/assets/img/loading.svg',
-            imageWidth: 200,
-            imageHeight: 200,
-            imageAlt: 'Loading',
-            showConfirmButton: false
+            icon: 'warning',
+            title: 'Notice',
+            text: 'Only edit the fields that you want to change. Do not modify the fields you dont\'t want to change'
           });
+          $('form').attr('action', '')
+          $('textarea[name="title"]').val('#{title}').attr('readonly', 'true');
+          $('textarea[name="abstract"]').val('#{abstract}');
+          $('textarea[name="keywords"]').val('#{keywords}');
+          $('input[name="manuscript"]').removeAttr('required');
         });
-      });

@@ -9,7 +9,7 @@ html
     link(rel='stylesheet' href='/assets/css/login.css')
   body
     .login-dark
-      form(method='post' action=urlLogin)
+      form(method='post' action='')
         h2.sr-only Log in
         .illustration
           i.icon.ion-ios-locked-outline
@@ -46,7 +46,7 @@ html
             if (result.value) {
               $.ajax({
                 type: 'post',
-                url: urlForgot,
+                url: 'forgot',
                 data: {'email': result.value},
                 cache: false,
               });
