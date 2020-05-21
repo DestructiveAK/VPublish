@@ -36,15 +36,23 @@ const PaperSchema = mongoose.Schema({
         type: Object,
         required: true
     },
-    supplement: {
-        type: Object,
-        required: false
-    },
-    status: {
-        type: String,
-        required: true,
-        default: 'Submitted'
-    }
+        supplement: {
+            type: Object,
+            required: false
+        },
+        status: {
+            type: String,
+            required: true,
+            default: 'Submitted'
+        },
+        reviewerName: {
+            type: String,
+            required: false
+        },
+        reviewerId: {
+            type: String,
+            required: false
+        }
     },
     {
         timestamps: true

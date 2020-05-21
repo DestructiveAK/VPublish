@@ -1,7 +1,7 @@
 
 const Token = require('../models/token.model');
 const bcrypt = require('bcryptjs');
-const { generateToken } = require('../middlewares/token');
+const {generateToken} = require('../helpers/token');
 
 exports.signup = (User) => {
     return (req, res) => {
@@ -192,5 +192,45 @@ exports.resetPost = (User) => {
                         res.sendStatus(200);
                     });
             });
+    }
+}
+
+exports.changeDetails = (User) => {
+    return (req, res) => {
+        if (!req.session.user) return res.render('forbidden');
+        const firstName = req.body.firstname;
+        const lastName = req.body.lastname;
+        const email = req.body.email;
+        if (!firstName || !lastName || !email) return res.render('forbidden');
+        User.findOne({email: req.session.user.email})
+            .then(user => {
+                user.firstname = firstName;
+                user.lastname = lastName;
+                user.email = email;
+                user.save();
+            }).catch(err => {
+            console.error(err);
+        })
+        res.redirect('/logout');
+    }
+}
+
+exports.changePassword = (User) => {
+    return (req, res) => {
+        if (!req.session.user) return res.render('forbidden');
+        const currentPassword = req.body.current_password;
+        const newPassword = req.body.new_password;
+        const confirmPassword = req.body.confirm_password;
+        if (!confirmPassword || !newPassword || !currentPassword) return res.status(400).send('Incomplete data provided');
+        if (newPassword !== confirmPassword) return res.status(400).send('Invalid data');
+        User.findOne({email: req.session.user.email})
+            .then(user => {
+                if (!bcrypt.compareSync(currentPassword, user.password)) return res.status(400).send('Invalid password');
+                user.password = bcrypt.hashSync(newPassword, 10);
+                user.save();
+                res.status(200).send('Password Change');
+            }).catch(err => {
+            console.error(err);
+        });
     }
 }

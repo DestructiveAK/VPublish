@@ -1,0 +1,121 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width,initial-scale=1,shrink-to-fit=no')
+    title Profile - VPublish
+    link(rel='stylesheet' href='/assets/bootstrap/css/custom_bootstrap.min.css')
+    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i')
+    link(rel='stylesheet' href='https://use.fontawesome.com/releases/v5.12.0/css/all.css')
+  body#page-top
+    #wrapper
+      .d-flex.flex-column#content-wrapper
+        #content
+          nav.navbar.navbar-light.navbar-expand-md.navigation-clean
+            .container
+              a.navbar-brand(href='/') VPublish
+              button.navbar-toggler(data-toggle='collapse' data-target='#navcol-1')
+                span.sr-only Toggle navigation
+                span.navbar-toggler-icon
+              .collapse.navbar-collapse#navcol-1
+                ul.nav.navbar-nav.ml-auto
+                  li.nav-item(role='presentation')
+                    a.nav-link(href='/') Home
+                  li.nav-item(role='presentation')
+                    a.nav-link(href='dashboard') Dashboard
+                  li.nav-item(role='presentation')
+                    a.nav-link(href='logout') Logout
+          .container-fluid
+            h3.text-dark.mb-4 Profile
+            .row.mb-3
+              .col-lg-4
+                .card.mb-3
+                  .card-body.text-center.shadow
+                    img.rounded-circle.mb-3.mt-4(src='/assets/img/dog.jpeg' width='160' height='160')
+                    .mb-3
+                      button.btn.btn-primary.btn-sm(type='button') Change Photo
+                .card.shadow.mb-4
+                  .card-header.py-3
+                    h6.text-primary.font-weight-bold.m-0 Papers
+                  .card-body
+                    if locals.user.role === 'author'
+                      h4.small.font-weight-bold
+                        | Submitted
+                        span.float-right=paper.submitted
+                    h4.small.font-weight-bold
+                      | Under Review
+                      span.float-right=paper.underReview
+                    h4.small.font-weight-bold
+                      | Marked for Revision
+                      span.float-right=paper.needsRevision
+                    h4.small.font-weight-bold
+                      | Accepted
+                      span.float-right=paper.accepted
+                    h4.small.font-weight-bold
+                      | Rejected
+                      span.float-right=paper.rejected
+              .col-lg-8
+                .row
+                  .col
+                    .card.shadow.mb-3
+                      .card-header.py-3
+                        p.text-primary.m-0.font-weight-bold User Details
+                      .card-body
+                        form(method='post' action='change/details')
+                          .form-row
+                            .col
+                              .form-group
+                                label(for='firstname')
+                                  strong First Name
+                                input.form-control(type='text' id='firstname' name='firstname' value=locals.user.firstname readonly required)
+                            .col
+                              .form-group
+                                label(for='lastname')
+                                  strong Last Name
+                                input.form-control(type='text' id='lastname' name='lastname' value=locals.user.lastname readonly required)
+                          .form-row
+                            .col
+                              .form-group
+                                label(for='email')
+                                  strong Email Address
+                                input.form-control(type='email' id='email' name='email' value=locals.user.email readonly required)
+                            .col
+                              .form-group
+                                label(for='role')
+                                  strong Role
+                                  br
+                                input.form-control(type='text' name='role' id='role' value=locals.user.role readonly required)
+                          .form-group
+                            button.btn.btn-danger.btn-sm.btn-change-details(type='button') Change Details
+                            button.btn.btn-success.btn-sm.btn-submit-details(type='submit' style='display: none') Submit Details
+                    .card.shadow
+                      .card-header.py-3
+                        p.text-primary.m-0.font-weight-bold Change Password
+                      .card-body
+                        form(id='change-password' method='post' action='change/password')
+                          .form-group
+                            label(for='current_password')
+                              strong Current Password
+                            input.form-control(type='password' placeholder='Current Password' id='current_password' name='current_password' required)
+                          .form-group
+                            label(for='new_password')
+                              strong New Password
+                            input.form-control(type='password' placeholder='New Password' id='new_password' name='new_password' required)
+                          .form-group
+                            label(for='confirm_password')
+                              strong Confirm Password
+                            input.form-control(type='password' placeholder='Confirm Password' id='confirm_password' name='confirm_password' required)
+                          .form-group
+                            button.btn.btn-primary.btn-sm.btn-change-password(type='submit') Change Password
+        footer.bg-white.sticky-footer
+          .container.my-auto
+            .text-center.my-auto.copyright
+              span Copyright © VPublish 2020
+      a.border.rounded.d-inline.scroll-to-top(href='#page-top')
+        i.fas.fa-angle-up
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js')
+    script(src='https://cdn.jsdelivr.net/npm/sweetalert2@9')
+    script(src='/assets/js/profile.js')
