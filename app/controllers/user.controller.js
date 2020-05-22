@@ -70,9 +70,17 @@ exports.login = (User) => {
         }
 
         User.findOne({email: email}, function (err, user) {
-            if (!user) return res.render('login', {error: 'Invalid Email or Password.'});
+            if (!user) return res.render('login', {
+                error: 'Invalid Email or Password.',
+                forgotLink: true,
+                signUpLink: true
+            });
             if (!bcrypt.compareSync(password, user.password))
-                return res.render('login',{error: 'Invalid Email or Password.'});
+                return res.render('login', {
+                    error: 'Invalid Email or Password.',
+                    forgotLink: true,
+                    signUpLink: true
+                });
             if (!user.isVerified)
                 return res.render('login', {error: 'User not verified.'});
             req.session.user = {
@@ -208,7 +216,12 @@ exports.changeDetails = (User) => {
                 user.lastname = lastName;
                 user.email = email;
                 user.save();
-                req.session.user.email = email;
+                req.session.user = {
+                    firstname: firstName,
+                    lastname: lastName,
+                    email: email,
+                    role: user.role
+                };
                 req.session.save();
             }).catch(err => {
             console.error(err);
