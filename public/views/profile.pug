@@ -7,6 +7,11 @@ html
     link(rel='stylesheet' href='/assets/bootstrap/css/custom_bootstrap.min.css')
     link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i')
     link(rel='stylesheet' href='https://use.fontawesome.com/releases/v5.12.0/css/all.css')
+    style.
+      .custom-file-label {
+        position: absolute;
+        top: inherit;
+      }
   body#page-top
     #wrapper
       .d-flex.flex-column#content-wrapper
@@ -31,9 +36,16 @@ html
               .col-lg-4
                 .card.mb-3
                   .card-body.text-center.shadow
-                    img.rounded-circle.mb-3.mt-4(src='/assets/img/dog.jpeg' width='160' height='160')
+                    if !image
+                      img.rounded-circle.mb-3.mt-4(src='/assets/img/dog.jpeg' width='160' height='160')
+                    else
+                      img.rounded-circle.mb-3.mt-4(src=`data:${mimetype};base64,${image}` width='160' height='160')
                     .mb-3
-                      button.btn.btn-primary.btn-sm(type='button') Change Photo
+                      form(method='post' action='change/image' enctype='multipart/form-data')
+                        .form-group.p-3
+                          input.border(type='file' accept='image/*' name='image' id='changeImage' required)
+                        .form-group
+                          button.btn.btn-success(type='submit') Set as Profile Picture
                 .card.shadow.mb-4
                   .card-header.py-3
                     h6.text-primary.font-weight-bold.m-0 Papers

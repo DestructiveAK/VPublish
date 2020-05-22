@@ -208,10 +208,12 @@ exports.changeDetails = (User) => {
                 user.lastname = lastName;
                 user.email = email;
                 user.save();
+                req.session.user.email = email;
+                req.session.save();
             }).catch(err => {
             console.error(err);
         })
-        res.redirect('/logout');
+        res.redirect('back');
     }
 }
 
@@ -232,5 +234,20 @@ exports.changePassword = (User) => {
             }).catch(err => {
             console.error(err);
         });
+    }
+}
+
+exports.profileImage = (User) => {
+    return (req, res) => {
+        if (!req.session.user) return res.render('forbidden');
+        if (!req.file) return res.redirect('back');
+        User.findOne({email: req.session.user.email})
+            .then(user => {
+                user.profileImage = req.file;
+                user.save();
+            }).catch(e => {
+            console.error(e);
+        });
+        res.redirect('back');
     }
 }

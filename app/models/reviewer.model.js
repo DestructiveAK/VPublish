@@ -22,14 +22,18 @@ const ReviewerSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    isVerified: {
-        type:Boolean,
-        default: false
-    },
-    role: {
-        type: String,
-        default: 'reviewer'
-    }
+        isVerified: {
+            type: Boolean,
+            default: false
+        },
+        role: {
+            type: String,
+            default: 'reviewer'
+        },
+        profileImage: {
+            type: Object,
+            required: false
+        }
     },
     {
         timestamps: true

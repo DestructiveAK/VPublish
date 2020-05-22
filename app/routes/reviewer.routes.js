@@ -3,6 +3,10 @@ const controller = require('../controllers/user.controller')
 const router = require('express').Router();
 const Paper = require('../models/paper.model');
 const {checkUser} = require("../helpers/auth");
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({storage: storage});
+
 
 //Create new user account
 router.post('/signup', controller.signup(Reviewer));
@@ -70,6 +74,9 @@ router.get('/profile', async (req, res) => {
     if (!req.session.user) return res.render('forbidden');
     const paper = {};
     try {
+        const user = await Reviewer.findOne({email: req.session.user.email}, {profileImage: 1});
+        const image = (user.profileImage) ? user.profileImage.buffer.toString('base64') : null;
+        const mimeType = (user.profileImage) ? user.profileImage.mimetype : null;
         paper.underReview = await Paper.countDocuments({reviewerId: req.session.user.email, status: 'Under Review'});
         paper.needsRevision = await Paper.countDocuments({
             reviewerId: req.session.user.email,
@@ -78,7 +85,9 @@ router.get('/profile', async (req, res) => {
         paper.accepted = await Paper.countDocuments({reviewerId: req.session.user.email, status: 'Accepted'});
         paper.rejected = await Paper.countDocuments({reviewerId: req.session.user.email, status: 'Rejected'});
         res.render('profile', {
-            paper: paper
+            paper: paper,
+            image: image,
+            mimeType: mimeType
         });
     } catch (e) {
         res.render('not-found');
@@ -89,5 +98,7 @@ router.get('/profile', async (req, res) => {
 router.post('/change/details', controller.changeDetails(Reviewer));
 
 router.post('/change/password', controller.changePassword(Reviewer));
+
+router.post('/change/image', upload.single('image'), controller.profileImage(Reviewer));
 
 module.exports = router;

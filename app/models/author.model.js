@@ -22,15 +22,19 @@ const AuthorSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    isVerified: {
-        type:Boolean,
-        default: false
+        isVerified: {
+            type: Boolean,
+            default: false
+        },
+        role: {
+            type: String,
+            default: 'author'
+        },
+        profileImage: {
+            type: Object,
+            required: false
+        }
     },
-    role: {
-        type: String,
-        default: 'author'
-    }
-},
     {
         timestamps: true
     });
