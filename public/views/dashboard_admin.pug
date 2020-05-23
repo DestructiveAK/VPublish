@@ -1,0 +1,167 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width,initial-scale=1,shrink-to-fit=no')
+    title Dashboard - VPublish
+    link(rel='stylesheet' href='/assets/bootstrap/css/custom_bootstrap.min.css')
+    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i')
+    link(rel='stylesheet' href='https://use.fontawesome.com/releases/v5.12.0/css/all.css')
+  body#page-top
+    #wrapper
+      .d-flex.flex-column#content-wrapper
+        #content
+          nav.navbar.navbar-light.navbar-expand-md.navigation-clean
+            .container
+              a.navbar-brand(href='/') VPublish
+              button.navbar-toggler(data-toggle='collapse' data-target='#navcol-1')
+                span.sr-only Toggle navigation
+                span.navbar-toggler-icon
+              .collapse.navbar-collapse#navcol-1
+                ul.nav.navbar-nav.ml-auto
+                  li.nav-item(role='presentation')
+                    a.nav-link(href='/') Home
+                  li.nav-item(role='presentation')
+                    a.nav-link(href='profile')
+                      img.d-none.d-lg-inline.border.rounded-circle.img-profile.mr-1(src='/assets/img/avatar.svg' height='25px' width='25px')
+                      span Profile
+                  li.nav-item(role='presentation')
+                    a.nav-link(href='logout') Logout
+          .container-fluid
+            h3.text-dark.mb-4 Users
+            .card.shadow.mb-5
+              .card-header.py-3
+                p.text-primary.m-0.font-weight-bold Author Info
+              .card-body
+                .table-responsive.table.mt-2(role='grid' aria-describedby='dataTable_info')
+                  table.table.my-0#authordataTable
+                    thead
+                      tr
+                        th ID
+                        th Name
+                        th Email
+                        th Created At
+                        th Updated At
+                        th Verified
+                        th Action
+                    tbody
+                      if authors
+                        each author in authors
+                          tr
+                            td=author._id
+                            td=author.firstname + author.lastname
+                            td=author.email
+                            td=author.createdAt
+                            td=author.updatedAt
+                            td=author.isVerified
+                            td
+                              a.btn.btn-danger.btn-sm(role='button' href=`/author/delete/${author._id}`)
+                                strong Delete
+                      else
+                        tr
+                          td.text-center(colspan='7') No author account exists
+            .card.shadow.mb-5
+              .card-header.py-3
+                p.text-primary.m-0.font-weight-bold Reviewer Info
+              .card-body
+                .table-responsive.table.mt-2(role='grid' aria-describedby='dataTable_info')
+                  table.table.my-0#reviewerDataTable
+                    thead
+                      tr
+                        th ID
+                        th Name
+                        th Email
+                        th Created At
+                        th Updated At
+                        th Verified
+                        th Action
+                    tbody
+                      if reviewers
+                        each reviewer in reviewers
+                          tr
+                            td=reviewer._id
+                            td=reviewer.firstname + reviewer.lastname
+                            td=reviewer.email
+                            td=reviewer.createdAt
+                            td=reviewer.updatedAt
+                            td=reviewer.isVerified
+                            td
+                              a.btn.btn-danger.btn-sm(role='button' href=`/reviewer/delete/${reviewer._id}`)
+                                strong Delete
+                      else
+                        tr
+                          td.text-center(colspan='7') No reviewer account exists
+            .card.shadow.mb-5
+              .card-header.py-3
+                p.text-primary.m-0.font-weight-bold Editor Info
+              .card-body
+                .table-responsive.table.mt-2(role='grid' aria-describedby='dataTable_info')
+                  table.table.my-0#editorDataTable
+                    thead
+                      tr
+                        th ID
+                        th Name
+                        th Email
+                        th Created At
+                        th Updated At
+                        th Verified
+                        th Action
+                    tbody
+                      if editors
+                        each editor in editors
+                          tr
+                            td=editor._id
+                            td=editor.firstname + editor.lastname
+                            td=editor.email
+                            td=editor.createdAt
+                            td=editor.updatedAt
+                            td=editor.isVerified
+                            td
+                              a.btn.btn-danger.btn-sm(role='button' href=`/editor/delete/${editor._id}`)
+                                strong Delete
+                      else
+                        tr
+                          td.text-center(colspan='7') No editor account exists
+            h3.text-dark.mb-4 Papers
+            .card.shadow.mb-5
+              .card-header.py-3
+                p.text-primary.m-0.font-weight-bold Paper Info
+              .card-body
+                .table-responsive.table.mt-2(role='grid' aria-describedby='dataTable_info')
+                  table.table.my-0#paperDataTable
+                    thead
+                      tr
+                        th ID
+                        th Title
+                        th Author
+                        th Reviewer
+                        th Status
+                        th Action
+                    tbody
+                      if papers
+                        each paper in papers
+                          tr
+                            td=paper._id
+                            td=paper.title
+                            td=paper.authorName
+                            if paper.reviewerName
+                              td=paper.reviewerName
+                            else
+                              td -
+                            td=paper.status
+                            td
+                              a.btn.btn-danger.btn-sm(role='button' href=`/paper/${paper._id}/delete`)
+                                strong Delete
+                      else
+                        tr
+                          td.text-center(colspan='6') No paper exists
+        footer.bg-white.sticky-footer
+          .container.my-auto
+            .text-center.my-auto.copyright
+              span Copyright © VPublish 2020
+      a.border.rounded.d-inline.scroll-to-top(href='#page-top')
+        i.fas.fa-angle-up
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js')
+    script(src='/assets/js/scrolling.js')

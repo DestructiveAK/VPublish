@@ -46,26 +46,27 @@ html
                           input.border(type='file' accept='image/*' name='image' id='changeImage' required)
                         .form-group
                           button.btn.btn-success(type='submit') Set as Profile Picture
-                .card.shadow.mb-4
-                  .card-header.py-3
-                    h6.text-primary.font-weight-bold.m-0 Papers
-                  .card-body
-                    if locals.user.role === 'author'
+                if locals.user.role !== 'admin'
+                  .card.shadow.mb-4
+                    .card-header.py-3
+                      h6.text-primary.font-weight-bold.m-0 Papers
+                    .card-body
+                      if locals.user.role === 'author'
+                        h4.small.font-weight-bold
+                          | Submitted
+                          span.float-right=paper.submitted
                       h4.small.font-weight-bold
-                        | Submitted
-                        span.float-right=paper.submitted
-                    h4.small.font-weight-bold
-                      | Under Review
-                      span.float-right=paper.underReview
-                    h4.small.font-weight-bold
-                      | Marked for Revision
-                      span.float-right=paper.needsRevision
-                    h4.small.font-weight-bold
-                      | Accepted
-                      span.float-right=paper.accepted
-                    h4.small.font-weight-bold
-                      | Rejected
-                      span.float-right=paper.rejected
+                        | Under Review
+                        span.float-right=paper.underReview
+                      h4.small.font-weight-bold
+                        | Marked for Revision
+                        span.float-right=paper.needsRevision
+                      h4.small.font-weight-bold
+                        | Accepted
+                        span.float-right=paper.accepted
+                      h4.small.font-weight-bold
+                        | Rejected
+                        span.float-right=paper.rejected
               .col-lg-8
                 .row
                   .col
@@ -130,4 +131,5 @@ html
     script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js')
     script(src='https://cdn.jsdelivr.net/npm/sweetalert2@9')
+    script(src='/assets/js/scrolling.js')
     script(src='/assets/js/profile.js')

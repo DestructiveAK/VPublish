@@ -23,7 +23,7 @@ html
                 a.nav-link(href='/reviewer/dashboard') Dashboard
             if locals.user && locals.user.role === 'admin'
               li.nav-item(role='presentation')
-                a.nav-link(href='/admin/dashboard')
+                a.nav-link(href='/admin/dashboard') Dashboard
             if locals.user
               li.nav-item(role='presentation')
                 a.nav-link(href='/logout') Logout

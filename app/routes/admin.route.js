@@ -22,23 +22,42 @@ router.get('/login', (req, res) => {
 })
 
 router.get('/dashboard', checkUser, async (req, res) => {
-    return res.render('forbidden');
     if (req.session.user.role !== 'admin') return res.redirect('/');
-    let author, reviewer, paper;
     try {
-        author = await Author.find({});
-        reviewer = await Reviewer.find({});
-        paper = await Paper.find({});
+        let authors = await Author.find({}, {password: 0, profileImage: 0});
+        let reviewers = await Reviewer.find({}, {password: 0, profileImage: 0});
+        let papers = await Paper.find({}, {_id: 1, title: 1, authorName: 1, reviewerName: 1, status: 1});
+        if (authors.length === 0) authors = null;
+        if (reviewers.length === 0) reviewers = null;
+        if (papers.length === 0) papers = null;
+        res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+        res.render('dashboard_admin', {
+            authors: authors,
+            reviewers: reviewers,
+            papers: papers
+        });
     } catch (e) {
         console.error(e);
+        res.render('not-found');
     }
-    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
-    res.render('dashboard_admin', {
-        author: author,
-        reviewer: reviewer,
-        paper: paper
-    });
-})
+});
+
+
+router.get('/profile', async (req, res) => {
+    if (!req.session.user) return res.render('forbidden');
+    try {
+        const user = await Admin.findOne({email: req.session.user.email}, {profileImage: 1});
+        const image = (user.profileImage) ? user.profileImage.buffer.toString('base64') : null;
+        const mimeType = (user.profileImage) ? user.profileImage.mimetype : null;
+        res.render('profile', {
+            image: image,
+            mimeType: mimeType
+        });
+    } catch (e) {
+        res.render('not-found');
+        console.error(e);
+    }
+});
 
 
 module.exports = router;
