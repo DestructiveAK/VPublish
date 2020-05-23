@@ -30,8 +30,8 @@ router.get('/profile', async (req, res) => {
     const paper = {};
     try {
         const user = await Author.findOne({email: req.session.user.email}, {profileImage: 1});
-        const image = user.profileImage.buffer.toString('base64');
-        const mimeType = user.profileImage.mimetype;
+        const image = (user.profileImage) ? user.profileImage.buffer.toString('base64') : null;
+        const mimeType = (user.profileImage) ? user.profileImage.mimetype : null;
         paper.submitted = await Paper.countDocuments({authorId: req.session.user.email, status: 'Submitted'});
         paper.underReview = await Paper.countDocuments({authorId: req.session.user.email, status: 'Under Review'});
         paper.needsRevision = await Paper.countDocuments({authorId: req.session.user.email, status: 'Needs Revision'});
@@ -53,5 +53,7 @@ router.post('/change/details', controller.changeDetails(Author));
 router.post('/change/password', controller.changePassword(Author));
 
 router.post('/change/image', upload.single('image'), controller.profileImage(Author));
+
+router.get('/author/delete/:id', controller.deleteAccount(Author));
 
 module.exports = router;

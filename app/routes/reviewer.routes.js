@@ -101,4 +101,6 @@ router.post('/change/password', controller.changePassword(Reviewer));
 
 router.post('/change/image', upload.single('image'), controller.profileImage(Reviewer));
 
+router.get('/delete/:id', controller.deleteAccount(Reviewer));
+
 module.exports = router;

@@ -264,3 +264,15 @@ exports.profileImage = (User) => {
         res.redirect('back');
     }
 }
+
+
+exports.deleteAccount = (User) => {
+    return (req, res) => {
+        if (req.session.user.role !== 'admin') res.redirect('back');
+        const userId = req.params.id;
+        User.deleteOne({_id: userId}, (err) => {
+            console.log(err);
+        });
+        res.redirect('back');
+    }
+}
