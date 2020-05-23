@@ -29,14 +29,14 @@ router.post('/reset/:token', controller.resetPost(Reviewer));
 
 router.get('/signup', (req, res) => {
     if (req.session.user && req.session.user.role === 'reviewer' && req.cookies.user_logged) {
-        return res.redirect('/dashboard');
+        return res.redirect('dashboard');
     }
     res.render('signup');
 });
 
 router.get('/login', (req, res) => {
     if (req.session.user && req.session.user.role === 'reviewer' && req.cookies.user_logged) {
-        return res.redirect('/dashboard');
+        return res.redirect('dashboard');
     }
     res.render('login', {
         signUpLink: false,
@@ -67,7 +67,7 @@ router.get('/review/:paperId', (req, res) => {
         }).catch((err) => {
         console.error(err);
     });
-    res.redirect('/reviewer/dashboard');
+    res.redirect('back');
 });
 
 router.get('/profile', async (req, res) => {

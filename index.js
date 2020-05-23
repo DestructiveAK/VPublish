@@ -14,6 +14,7 @@ const reviewerRoutes = require('./app/routes/reviewer.routes');
 const publicRoutes = require('./app/routes/public.routes');
 const paperRoutes = require('./app/routes/paper.routes');
 const adminRoute = require('./app/routes/admin.route');
+const editorRoute = require('./app/routes/editor.routes');
 
 //define listening port
 const PORT = 8080;
@@ -110,6 +111,7 @@ app.use('/', authorRoutes);
 app.use('/reviewer', reviewerRoutes);
 app.use('/admin', adminRoute);
 app.use('/paper', paperRoutes);
+app.use('/editor', editorRoute);
 app.use(function (req, res) {
     res.status(404).render('not-found')
 });

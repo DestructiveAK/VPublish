@@ -46,7 +46,7 @@ html
                           input.border(type='file' accept='image/*' name='image' id='changeImage' required)
                         .form-group
                           button.btn.btn-success(type='submit') Set as Profile Picture
-                if locals.user.role !== 'admin'
+                if (locals.user.role !== 'admin' && locals.user.role !== 'editor')
                   .card.shadow.mb-4
                     .card-header.py-3
                       h6.text-primary.font-weight-bold.m-0 Papers

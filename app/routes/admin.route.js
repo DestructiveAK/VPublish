@@ -1,6 +1,7 @@
 const Admin = require('../models/admin.model');
 const Author = require('../models/author.model');
 const Reviewer = require('../models/reviewer.model');
+const Editor = require('../models/editor.model');
 const Paper = require('../models/paper.model');
 const router = require('express').Router();
 const controller = require('../controllers/user.controller');
@@ -9,7 +10,7 @@ const {checkUser} = require('../helpers/auth');
 
 router.post('/login', controller.login(Admin));
 
-router.post('/logout', controller.logout());
+router.get('/logout', controller.logout());
 
 router.get('/login', (req, res) => {
     if (req.session.user && req.session.user.role === 'admin' && req.cookies.user_logged) {
@@ -26,6 +27,7 @@ router.get('/dashboard', checkUser, async (req, res) => {
     try {
         let authors = await Author.find({}, {password: 0, profileImage: 0});
         let reviewers = await Reviewer.find({}, {password: 0, profileImage: 0});
+        let editors = await Editor.find({}, {password: 0, profileImage: 0});
         let papers = await Paper.find({}, {_id: 1, title: 1, authorName: 1, reviewerName: 1, status: 1});
         if (authors.length === 0) authors = null;
         if (reviewers.length === 0) reviewers = null;
@@ -34,6 +36,7 @@ router.get('/dashboard', checkUser, async (req, res) => {
         res.render('dashboard_admin', {
             authors: authors,
             reviewers: reviewers,
+            editors: editors,
             papers: papers
         });
     } catch (e) {

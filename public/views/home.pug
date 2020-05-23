@@ -21,6 +21,9 @@ html
             if locals.user && locals.user.role === 'reviewer'
               li.nav-item(role='presentation')
                 a.nav-link(href='/reviewer/dashboard') Dashboard
+            if locals.user && locals.user.role === 'editor'
+              li.nav-item(role='presentation')
+                a.nav-link(href='/editor/dashboard') Dashboard
             if locals.user && locals.user.role === 'admin'
               li.nav-item(role='presentation')
                 a.nav-link(href='/admin/dashboard') Dashboard
@@ -34,6 +37,8 @@ html
                 a.nav-link(href='/login') Log In
               li.nav-item(role='presentation')
                 a.nav-link(href='/reviewer/login') Reviewer
+              li.nav-item(role='presentation')
+                a.nav-link(href='/editor/login') Editor
               li.nav-item(role='presentation')
                 a.nav-link(href='/admin/login') Admin
     header.masthead.text-center.text-white
