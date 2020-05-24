@@ -31,7 +31,7 @@ router.get('/dashboard', checkUser, async (req, res) => {
         let papers = await Paper.find({}, {_id: 1, title: 1, authorName: 1, reviewerName: 1, status: 1});
         if (authors.length === 0) authors = null;
         if (reviewers.length === 0) reviewers = null;
-        if (editors.length === 0) reviewers = null;
+        if (editors.length === 0) editors = null;
         if (papers.length === 0) papers = null;
         res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
         res.render('dashboard_admin', {

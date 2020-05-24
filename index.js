@@ -13,7 +13,7 @@ const authorRoutes = require('./app/routes/author.routes');
 const reviewerRoutes = require('./app/routes/reviewer.routes');
 const publicRoutes = require('./app/routes/public.routes');
 const paperRoutes = require('./app/routes/paper.routes');
-const adminRoute = require('./app/routes/admin.route');
+const adminRoute = require('./app/routes/admin.routes');
 const editorRoute = require('./app/routes/editor.routes');
 
 //define listening port
