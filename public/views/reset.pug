@@ -8,7 +8,7 @@ html
     .container
       h1 Reset Password
       form.form
-        input(type='password' placeholder='New Password' name='password' required)
+        input(type='password' placeholder='New Password' name='password' pattern='(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}' required)
         input(type='password' placeholder='Confirm Password' name='passwordrepeat' required)
         button(type='submit') Reset Password
     ul.bg-bubbles
@@ -17,6 +17,7 @@ html
                 li
     script(src='/assets/js/jquery.min.js')
     script(src='https://cdn.jsdelivr.net/npm/sweetalert2@9')
+    script(src='/assets/js/validation.js')
     script.
       $(function () {
         $('.form').on('submit', (e) => {

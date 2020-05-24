@@ -29,7 +29,7 @@ html
               input.w-full.px-8.py-4.rounded-lg.font-medium.bg-gray-100.border.border-gray-200.placeholder-gray-500.text-sm(class='focus:outline-none focus:border-gray-400 focus:bg-white' type='text' placeholder='First Name' name='firstname' required)
               input.w-full.px-8.py-4.rounded-lg.font-medium.bg-gray-100.border.border-gray-200.placeholder-gray-500.text-sm.mt-5(class='focus:outline-none focus:border-gray-400 focus:bg-white' type='text' placeholder='Last Name' name='lastname' required)
               input.w-full.px-8.py-4.rounded-lg.font-medium.bg-gray-100.border.border-gray-200.placeholder-gray-500.text-sm.mt-5(class='focus:outline-none focus:border-gray-400 focus:bg-white' type='email' placeholder='Email' name='email' required)
-              input.w-full.px-8.py-4.rounded-lg.font-medium.bg-gray-100.border.border-gray-200.placeholder-gray-500.text-sm.mt-5(class='focus:outline-none focus:border-gray-400 focus:bg-white' type='password' placeholder='Password' name='password' required)
+              input.w-full.px-8.py-4.rounded-lg.font-medium.bg-gray-100.border.border-gray-200.placeholder-gray-500.text-sm.mt-5(class='focus:outline-none focus:border-gray-400 focus:bg-white' type='password' placeholder='Password' name='password' pattern='(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}' required)
               input.w-full.px-8.py-4.rounded-lg.font-medium.bg-gray-100.border.border-gray-200.placeholder-gray-500.text-sm.mt-5(class='focus:outline-none focus:border-gray-400 focus:bg-white' type='password' placeholder='Confirm Password' name='passwordrepeat' required)
               button.mt-5.tracking-wide.font-semibold.bg-indigo-500.text-gray-100.w-full.py-4.rounded-lg.transition-all.duration-300.ease-in-out.flex.items-center.justify-center(class='focus:shadow-outline focus:outline-none hover:bg-indigo-700' type='submit')
                 svg.w-6.h-6.-ml-2(fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round')
@@ -37,9 +37,11 @@ html
                   circle(cx='8.5' cy='7' r='4')
                   path(d='M20 8v6M23 11h-6')
                 span.ml-3.
-                  
-                  Sign Up
+
+                                    Sign Up
               .text-center.mt-4
                 a(href='login') Already have an account ?
       .flex-1.bg-indigo-100.text-center.hidden(class='lg:flex')
         .m-12.w-full.bg-contain.bg-center.bg-no-repeat(class='xl:m-16' style='background-image: url(\'/assets/img/signup_img.svg\');')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js')
+    script(src='/assets/js/validation.js')
