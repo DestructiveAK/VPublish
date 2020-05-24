@@ -47,12 +47,51 @@ router.get('/login', (req, res) => {
 router.get('/dashboard', checkUser, (req, res) => {
     if (req.session.user.role !== 'editor') return res.redirect('/')
     res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
-    Paper.find({status: 'Reviewed'}, (err, papers) => {
+    Paper.find({status: {$in: ['Reviewed', 'Need Revision', 'Accepted']}}, (err, papers) => {
         if (papers.length === 0) return res.render('dashboard');
         res.render('dashboard', {
             papers: papers
         });
     });
+});
+
+router.get('/accept/:paperId', (req, res) => {
+    if (req.session.user.role !== 'editor') return res.render('forbidden');
+    const paperId = req.params.paperId;
+    Paper.findById(paperId)
+        .then(paper => {
+            paper.status = 'Accepted';
+            paper.save();
+        }).catch(err => {
+        console.error(err);
+    });
+    res.redirect('back');
+});
+
+router.get('/reject/:paperId', (req, res) => {
+    if (req.session.user.role !== 'editor') return res.render('forbidden');
+    const paperId = req.params.paperId;
+    Paper.findById(paperId)
+        .then(paper => {
+            paper.status = 'Rejected';
+            paper.save();
+        }).catch(err => {
+        console.log(err);
+    });
+    res.redirect('back');
+});
+
+router.get('/revision/:paperId', (req, res) => {
+    if (req.session.user.role !== 'editor') return res.render('forbidden');
+    const paperId = req.params.paperId;
+    Paper.findById(paperId)
+        .then(paper => {
+            paper.status = 'Need Revision';
+            paper.save();
+        }).catch(err => {
+        console.error(err);
+    });
+    res.redirect('back');
 });
 
 

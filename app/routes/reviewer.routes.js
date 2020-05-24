@@ -62,9 +62,48 @@ router.get('/review/:paperId', (req, res) => {
         .then((paper) => {
             paper.status = 'Under Review';
             paper.reviewerName = req.session.user.firstname + ' ' + req.session.user.lastname;
-            paper.reviewerId = req.session.user.reviewerId;
+            paper.reviewerId = req.session.user.email;
             paper.save();
         }).catch((err) => {
+        console.error(err);
+    });
+    res.redirect('back');
+});
+
+router.get('/accept/:paperId', (req, res) => {
+    if (req.session.user.role !== 'reviewer') return res.render('forbidden');
+    const paperId = req.params.paperId;
+    Paper.findById(paperId)
+        .then((paper) => {
+            paper.status = 'Reviewed';
+            paper.save();
+        }).catch(err => {
+        console.error(err);
+    });
+    res.redirect('back');
+});
+
+router.get('/reject/:paperId', (req, res) => {
+    if (req.session.user.role !== 'reviewer') return res.render('forbidden');
+    const paperId = req.params.paperId;
+    Paper.findById(paperId)
+        .then((paper) => {
+            paper.status = 'Rejected';
+            paper.save();
+        }).catch(err => {
+        console.log(err);
+    });
+    res.redirect('back');
+});
+
+router.get('/revision/:paperId', (req, res) => {
+    if (req.session.user.role !== 'reviewer') return res.render('forbidden');
+    const paperId = req.params.paperId;
+    Paper.findById(paperId)
+        .then((paper) => {
+            paper.status = 'Needs Revision';
+            paper.save();
+        }).catch(err => {
         console.error(err);
     });
     res.redirect('back');
