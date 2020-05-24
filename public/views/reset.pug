@@ -31,6 +31,8 @@ html
             Swal.fire({
               icon: 'success',
               title: 'Password changed successfully'
+            }).then(() => {
+              location.href = '/';
             });
           })
           .fail(() => {
@@ -38,6 +40,8 @@ html
               icon: 'error',
               title: 'Failed to change password',
               text: 'Try again later'
+            }).then(() => {
+              location.href = '/';
             });
           });
         });
