@@ -237,7 +237,7 @@ exports.changePassword = (User) => {
         const newPassword = req.body.new_password;
         const confirmPassword = req.body.confirm_password;
         if (!confirmPassword && !newPassword && !currentPassword) return res.status(400).send('Incomplete data provided');
-        if (newPassword !== confirmPassword) return res.status(400).send('Invalid data');
+        if (newPassword !== confirmPassword) return res.status(400).send('New Password and Confirm Password must be same');
         User.findOne({email: req.session.user.email})
             .then(user => {
                 if (!bcrypt.compareSync(currentPassword, user.password)) return res.status(400).send('Invalid password');

@@ -105,6 +105,7 @@ router.get('/profile', async (req, res) => {
         const user = await Editor.findOne({email: req.session.user.email}, {profileImage: 1});
         const image = (user.profileImage) ? user.profileImage.buffer.toString('base64') : null;
         const mimeType = (user.profileImage) ? user.profileImage.mimetype : null;
+        res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
         res.render('profile', {
             paper: paper,
             image: image,

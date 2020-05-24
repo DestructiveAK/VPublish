@@ -2,15 +2,15 @@ let current_fs, next_fs, previous_fs;
 let left, opacity, scale;
 let animating;
 
-$(".next").click(function () {
+$(".next").on('click', function () {
     if (animating) return false;
     animating = true;
-    
+
     current_fs = $(this).parent();
     next_fs = $(this).parent().next();
-    
+
     $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-    
+
     next_fs.show();
     
     current_fs.animate({opacity: 0}, {
@@ -35,15 +35,15 @@ $(".next").click(function () {
     });
 });
 
-$(".previous").click(function () {
-    if(animating) return false;
+$(".previous").on('click', function () {
+    if (animating) return false;
     animating = true;
-    
+
     current_fs = $(this).parent();
     previous_fs = $(this).parent().prev();
-    
+
     $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
-    
+
     previous_fs.show();
     
     current_fs.animate({opacity: 0}, {
@@ -67,6 +67,6 @@ $(".previous").click(function () {
     });
 });
 
-$(".submit").click(function () {
+$(".submit").on('click', function () {
     return false;
 });

@@ -27,7 +27,7 @@ $(function () {
                     })
                 }).fail(() => {
                     Swal.fire({
-                        icon: 'danger',
+                        icon: 'error',
                         title: 'Operation failed',
                         text: 'Try again later'
                     });

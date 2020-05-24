@@ -126,6 +126,7 @@ router.get('/profile', async (req, res) => {
         });
         paper.accepted = await Paper.countDocuments({reviewerId: req.session.user.email, status: 'Accepted'});
         paper.rejected = await Paper.countDocuments({reviewerId: req.session.user.email, status: 'Rejected'});
+        res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
         res.render('profile', {
             paper: paper,
             image: image,

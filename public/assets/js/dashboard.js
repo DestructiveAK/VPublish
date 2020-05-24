@@ -22,15 +22,12 @@ $(function () {
                     Swal.fire({
                         icon: 'success',
                         title: 'Paper successfully deleted.'
-                    }).then((result) => {
-                        if (result.value) location.reload();
-                        else setTimeout(function () {
-                            location.reload();
-                        }, 0);
+                    }).then(() => {
+                        location.reload();
                     })
                 }).fail(() => {
                     Swal.fire({
-                        icon: 'danger',
+                        icon: 'error',
                         title: 'Unable to process request',
                         text: 'Try again later'
                     });
@@ -63,7 +60,7 @@ $(function () {
                     });
                 }).fail(() => {
                     Swal.fire({
-                        icon: 'danger',
+                        icon: 'error',
                         title: 'Operation failed',
                         text: 'Try again later'
                     }).then(() => {
@@ -98,7 +95,7 @@ $(function () {
                 });
             }).fail(() => {
                 Swal.fire({
-                    icon: 'danger',
+                    icon: 'error',
                     title: 'Operation failed'
                 });
             });

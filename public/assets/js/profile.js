@@ -21,10 +21,10 @@ $(function () {
             }).then(() => {
                 location.reload();
             });
-        }).fail(response => {
+        }).fail((response) => {
             Swal.fire({
-                icon: 'danger',
-                title: response
+                icon: 'error',
+                title: response.responseText
             }).then(() => {
                 location.reload();
             });
