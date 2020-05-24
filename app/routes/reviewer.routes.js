@@ -76,6 +76,7 @@ router.get('/accept/:paperId', (req, res) => {
     Paper.findById(paperId)
         .then((paper) => {
             paper.status = 'Reviewed';
+            if (paper.message) paper.message = null;
             paper.save();
         }).catch(err => {
         console.error(err);
@@ -96,12 +97,14 @@ router.get('/reject/:paperId', (req, res) => {
     res.redirect('back');
 });
 
-router.get('/revision/:paperId', (req, res) => {
+router.post('/revision/:paperId', (req, res) => {
     if (req.session.user.role !== 'reviewer') return res.render('forbidden');
     const paperId = req.params.paperId;
+    const message = req.body.message;
     Paper.findById(paperId)
         .then((paper) => {
             paper.status = 'Needs Revision';
+            paper.message = message;
             paper.save();
         }).catch(err => {
         console.error(err);

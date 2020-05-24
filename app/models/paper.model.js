@@ -52,6 +52,10 @@ const PaperSchema = mongoose.Schema({
         reviewerId: {
             type: String,
             required: false
+        },
+        message: {
+            type: String,
+            required: false
         }
     },
     {
