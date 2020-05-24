@@ -236,7 +236,7 @@ exports.changePassword = (User) => {
         const currentPassword = req.body.current_password;
         const newPassword = req.body.new_password;
         const confirmPassword = req.body.confirm_password;
-        if (!confirmPassword || !newPassword || !currentPassword) return res.status(400).send('Incomplete data provided');
+        if (!confirmPassword && !newPassword && !currentPassword) return res.status(400).send('Incomplete data provided');
         if (newPassword !== confirmPassword) return res.status(400).send('Invalid data');
         User.findOne({email: req.session.user.email})
             .then(user => {
@@ -245,6 +245,7 @@ exports.changePassword = (User) => {
                 user.save();
                 res.status(200).send('Password Change');
             }).catch(err => {
+            res.status(400).send('Failed to change password');
             console.error(err);
         });
     }
