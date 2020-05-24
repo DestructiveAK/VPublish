@@ -41,7 +41,8 @@ html
                     else
                       img.rounded-circle.mb-3.mt-4(src=`data:${mimetype};base64,${image}` width='160' height='160')
                     .mb-3
-                      form(method='post' action='change/image' enctype='multipart/form-data')
+                      button.btn.btn-info.change-image(type='button') Change Profile Image
+                      form.change-image(method='post' action='change/image' enctype='multipart/form-data' style='display: none')
                         .form-group.p-3
                           input.border(type='file' accept='image/*' name='image' id='changeImage' required)
                         .form-group

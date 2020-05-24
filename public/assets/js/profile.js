@@ -26,4 +26,10 @@ $(function () {
             });
         });
     });
+
+    $('button.change-image').on('click', function (e) {
+        e.preventDefault();
+        $(this).siblings('form.change-image').show();
+        $(this).hide();
+    })
 });
