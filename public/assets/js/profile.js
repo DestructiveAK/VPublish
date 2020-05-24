@@ -18,11 +18,15 @@ $(function () {
             Swal.fire({
                 icon: 'success',
                 title: response
+            }).then(() => {
+                location.reload();
             });
         }).fail(response => {
             Swal.fire({
                 icon: 'danger',
                 title: response
+            }).then(() => {
+                location.reload();
             });
         });
     });
@@ -31,5 +35,27 @@ $(function () {
         e.preventDefault();
         $(this).siblings('form.change-image').show();
         $(this).hide();
-    })
+    });
+
+
+    const passwordField = $('input[id="new_password"]');
+    const confirmPasswordField = $('input[id="confirm_password"]');
+
+    function validatePassword() {
+        if (passwordField.get(0).validity.patternMismatch) {
+            passwordField.get(0).setCustomValidity('Password must contain at least one uppercase,' +
+                'one lowercase and one digit, and must have at least 8 characters');
+        } else {
+            passwordField.get(0).setCustomValidity('');
+        }
+        if (passwordField.val() !== confirmPasswordField.val()) {
+            confirmPasswordField.get(0).setCustomValidity('Passwords do not match');
+        } else {
+            confirmPasswordField.get(0).setCustomValidity('');
+        }
+    }
+
+    $('button.btn-change-password').on('click', function () {
+        validatePassword();
+    });
 });

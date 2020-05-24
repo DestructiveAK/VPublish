@@ -114,7 +114,7 @@ html
                           .form-group
                             label(for='new_password')
                               strong New Password
-                            input.form-control(type='password' placeholder='New Password' id='new_password' name='new_password' required)
+                            input.form-control(type='password' placeholder='New Password' id='new_password' name='new_password' pattern='(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}' required)
                           .form-group
                             label(for='confirm_password')
                               strong Confirm Password
