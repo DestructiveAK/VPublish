@@ -55,7 +55,7 @@ html
                             td=author.updatedAt
                             td=author.isVerified
                             td
-                              a.btn.btn-danger.btn-sm(role='button' href=`/author/delete/${author._id}`)
+                              a.btn.btn-danger.btn-sm.delete(role='button' href=`/author/delete/${author._id}`)
                                 strong Delete
                       else
                         tr
@@ -86,7 +86,7 @@ html
                             td=reviewer.updatedAt
                             td=reviewer.isVerified
                             td
-                              a.btn.btn-danger.btn-sm(role='button' href=`/reviewer/delete/${reviewer._id}`)
+                              a.btn.btn-danger.btn-sm.delete(role='button' href=`/reviewer/delete/${reviewer._id}`)
                                 strong Delete
                       else
                         tr
@@ -117,7 +117,7 @@ html
                             td=editor.updatedAt
                             td=editor.isVerified
                             td
-                              a.btn.btn-danger.btn-sm(role='button' href=`/editor/delete/${editor._id}`)
+                              a.btn.btn-danger.btn-sm.delete(role='button' href=`/editor/delete/${editor._id}`)
                                 strong Delete
                       else
                         tr
@@ -150,7 +150,7 @@ html
                               td -
                             td=paper.status
                             td
-                              a.btn.btn-danger.btn-sm(role='button' href=`/paper/${paper._id}/delete`)
+                              a.btn.btn-danger.btn-sm.delete(role='button' href=`/paper/${paper._id}/delete`)
                                 strong Delete
                       else
                         tr
@@ -164,4 +164,6 @@ html
     script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js')
+    script(src='https://cdn.jsdelivr.net/npm/sweetalert2@9')
     script(src='/assets/js/scrolling.js')
+    script(src='/assets/js/admin.js')

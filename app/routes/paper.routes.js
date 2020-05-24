@@ -125,7 +125,7 @@ router.get('/:filename/download', checkUser, (req, res) => {
         });
 });
 
-router.get('/:id/delete', (req, res) => {
+router.get('/:id/delete', checkUser, (req, res) => {
     const paperId = req.params.id;
     Paper.findOne({_id: paperId}, (err, paper) => {
         if (!paper) return res.send('Requested operation cannot be processed.')

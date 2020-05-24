@@ -268,11 +268,11 @@ exports.profileImage = (User) => {
 
 exports.deleteAccount = (User) => {
     return (req, res) => {
-        if (req.session.user.role !== 'admin') res.redirect('back');
+        if (req.session.user.role !== 'admin') res.sendStatus(400);
         const userId = req.params.id;
         User.deleteOne({_id: userId}, (err) => {
             console.log(err);
         });
-        res.redirect('back');
+        res.sendStatus(200);
     }
 }
