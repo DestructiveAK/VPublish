@@ -18,13 +18,17 @@ html
 
             .form-group
               label Title
-              textarea.form-control(name='title' rows='2')
+              textarea.form-control(name='title' rows='2' maxlength='200' required)
             .form-group
-              label Abstract
-              textarea.form-control(name='abstract' maxlength='500' rows='6')
+              label
+                | Abstract
+                small.text-muted  (at most 500 words)
+              textarea.form-control(name='abstract' maxlength='2500' rows='7' required)
             .form-group
-              label Keywords
-              textarea.form-control(name='keywords' rows='3')
+              label
+                | Keywords
+                small.text-muted  (at least 5 keywords)
+              textarea.form-control(name='keywords' rows='3' minlength='20' required)
             .d-flex.justify-content-center
               button.btn.btn-primary.btn-next(type='button') Next
           fieldset
@@ -53,19 +57,23 @@ html
                 tbody
                   tr
                     td 1.
-                    td Cover Letter
                     td
-                      input(type='file' name='cover-letter')
+                      | Cover Letter
+                      small.text-muted  (Optional)
+                    td
+                      input(type='file' name='cover-letter' accept='application/*')
                   tr
                     td 2.
                     td Manuscript
                     td
-                      input(type='file' name='manuscript' required)
+                      input(type='file' name='manuscript' accept='application/*' required)
                   tr
                     td 3.
-                    td Supplementary Materials
                     td
-                      input(type='file' name='supplement')
+                      | Supplementary Materials
+                      small.text-muted  (Optional)
+                    td
+                      input(type='file' name='supplement' accept='application/*')
             .d-flex.justify-content-around
               button.btn.btn-primary.btn-prev(type='button') Previous
               button.btn.btn-primary(type='submit') Submit
