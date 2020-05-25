@@ -145,7 +145,7 @@ exports.confirmation = (User) => {
                     if (user.isVerified) return res.render('success',{
                         msg: 'Account already verified.',
                         info: 'This account is already verified',
-                        page: 'login',
+                        page: 'home',
                         stat: 'success'
                     });
 
@@ -154,7 +154,7 @@ exports.confirmation = (User) => {
                     user.save();
                     return res.render('success', {
                         msg: 'Account verified',
-                        page: 'login',
+                        page: 'home',
                         stat: 'success',
                         info: 'Account has been successfully verified'
                     });
