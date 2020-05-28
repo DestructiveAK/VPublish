@@ -1,4 +1,10 @@
 $(function () {
+
+    $('.paper-status').each(function () {
+        if (['Needs Revision', 'Need Revision'].includes($(this).text())) $(this).addClass('bg-warning');
+        if ($(this).text() === 'Rejected') $(this).addClass('bg-danger');
+    });
+
     $('.toggle').on('click', function () {
         $(this).find('.svg_icon').toggleClass('expanded');
         $(this).siblings().slideToggle(300);
