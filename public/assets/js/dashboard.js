@@ -88,23 +88,25 @@ $(function () {
             confirmButtonText: 'Confirm',
             cancelButtonText: 'Cancel'
         }).then(result => {
-            $.ajax({
-                type: 'post',
-                url: url,
-                data: {message: result.value}
-            }).done(() => {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Operation Successful'
-                }).then(() => {
-                    location.reload();
+            if (result.value) {
+                $.ajax({
+                    type: 'post',
+                    url: url,
+                    data: {message: result.value}
+                }).done(() => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Operation Successful'
+                    }).then(() => {
+                        location.reload();
+                    });
+                }).fail(() => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Operation failed'
+                    });
                 });
-            }).fail(() => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Operation failed'
-                });
-            });
+            }
         });
     });
 });
